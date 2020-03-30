@@ -8,7 +8,7 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                    <example-component>
+                    <note-list/>
                 </div>
             </div>
         </div>
