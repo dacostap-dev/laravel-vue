@@ -28,6 +28,7 @@ Vue.use(BootstrapVue) // Telling Vue to use this in whole application
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('note-list', require('./components/NoteListComponent.vue').default);
 Vue.component('note', require('./components/NoteComponent.vue').default);
+Vue.component('MessageComponent', require('./components/MessageComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Note;
 
-use App\Http\Controllers\Controller;
+use App\Note;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class NoteController extends Controller
 {
