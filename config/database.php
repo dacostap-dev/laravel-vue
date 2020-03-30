@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -62,15 +62,14 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('ec2-23-20-129-146.compute-1.amazonaws.com'),
+           // 'port' => env('DB_PORT', '5432'),
+            'database' => env('dfsfid3j495fsa'),
+            'username' => env('churussjnirati'),
+            'password' => env('bef7cd6c182aa06c5afda1f0cc842ea1aee9aee1decaca407f60a336b12cb834'),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
