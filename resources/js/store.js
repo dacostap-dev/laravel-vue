@@ -8,7 +8,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        notes: [],
+        notes: [
+            {
+                nombre: 'ss',
+                descripcion:'ss'
+            }
+        ],
         noteSelected: "",
         message: { color: "success", text: "" },
         dismissSecs: 5,

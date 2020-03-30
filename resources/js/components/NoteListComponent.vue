@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <Nota v-for="(nota, index) in notes" :key="index" :nota="nota"></Nota>
+        <note v-for="(nota, index) in notes" :key="index" :nota="nota"></note>
       </tbody>
     </table>
   </div>
