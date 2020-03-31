@@ -92789,7 +92789,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.baseURL = 'http://127.0.0.1:8000/api';
+axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.baseURL = 'http://appviru.herokuapp.com/api/';
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
