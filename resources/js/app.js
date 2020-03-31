@@ -10,9 +10,11 @@ window.Vue = require('vue');
 
 import store from './store'
 
+import axios from 'axios'
+
 import BootstrapVue from 'bootstrap-vue' //Importing
 
-Vue.use(BootstrapVue) // Telling Vue to use this in whole application
+Vue.use(BootstrapVue, axios) // Telling Vue to use this in whole application
 
 /**
  * The following block of code may be used to automatically register your
@@ -35,6 +37,7 @@ Vue.component('MessageComponent', require('./components/MessageComponent.vue').d
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+axios.defaults.baseURL = 'http://appviru.herokuapp.com/api/';
 
 const app = new Vue({
     el: '#app',
