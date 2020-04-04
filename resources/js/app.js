@@ -42,7 +42,6 @@ Vue.component('MessageComponent', require('./components/MessageComponent.vue').d
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-axios.defaults.baseURL = 'http://appviru.herokuapp.com/api/';
 
 Vue.component('container', require('./containers/TheContainer.vue').default);
 
