@@ -9,10 +9,15 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import store from './store'
+import router from './router'
 
 import BootstrapVue from 'bootstrap-vue' //Importing
 
-Vue.use(BootstrapVue) // Telling Vue to use this in whole application
+import CoreuiVue from '@coreui/vue'
+import { iconsSet as icons } from '../icons/icons.js'
+
+Vue.use(CoreuiVue) // Telling Vue to use this in whole application
+Vue.use(BootstrapVue)
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,7 +41,11 @@ Vue.component('MessageComponent', require('./components/MessageComponent.vue').d
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('container', require('./containers/TheContainer.vue').default);
+
 const app = new Vue({
     el: '#app',
-    store
+    store,
+    router,
+    icons,
 });

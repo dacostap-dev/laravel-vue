@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from './router';
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
 Vue.use(Vuex)
 
@@ -16,8 +17,21 @@ export default new Vuex.Store({
         dismissCountDown: 0,
         editar: false,
         modelEdit: { id: "", nombre: "", descripcion: "" },
+        sidebarShow: 'responsive',
+        sidebarMinimize: false
     },
     mutations: {
+      toggleSidebarDesktop (state) {
+        const sidebarOpened = [true, 'responsive'].includes(state.sidebarShow)
+        state.sidebarShow = sidebarOpened ? false : 'responsive'
+      },
+      toggleSidebarMobile (state) {
+        const sidebarClosed = [false, 'responsive'].includes(state.sidebarShow)
+        state.sidebarShow = sidebarClosed ? true : 'responsive'
+      },
+      set (state, [variable, value]) {
+        state[variable] = value
+      },
       NotesList(state, notes){
         state.notes = notes
       },
@@ -43,6 +57,16 @@ export default new Vuex.Store({
       },
     },
     actions: {
+      async logout(context) {
+        try {
+          const res = await axios.post("/logout")
+          router.go('login')
+          console.log(res.data)
+        }
+        catch (e) {
+          console.log(e.response)
+        }
+      },
       async getNotes(context) {
         try {
           const res = await axios.get("/notas")
