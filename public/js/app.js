@@ -92394,7 +92394,9 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -92404,9 +92406,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
+
  //Importing
 
-Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"]); // Telling Vue to use this in whole application
+Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"], axios__WEBPACK_IMPORTED_MODULE_1___default.a); // Telling Vue to use this in whole application
 
 /**
  * The following block of code may be used to automatically register your
@@ -92428,6 +92431,7 @@ Vue.component('MessageComponent', __webpack_require__(/*! ./components/MessageCo
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.baseURL = 'http://appviru.herokuapp.com/api/';
 var app = new Vue({
   el: '#app',
   store: _store__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -92789,7 +92793,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.baseURL = 'http://appviru.herokuapp.com/api/';
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
