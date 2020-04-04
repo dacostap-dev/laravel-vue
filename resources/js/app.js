@@ -9,12 +9,17 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import store from './store'
+import router from './router'
 
 import axios from 'axios'
 
 import BootstrapVue from 'bootstrap-vue' //Importing
 
-Vue.use(BootstrapVue, axios) // Telling Vue to use this in whole application
+import CoreuiVue from '@coreui/vue'
+import { iconsSet as icons } from '../icons/icons.js'
+
+Vue.use(CoreuiVue) // Telling Vue to use this in whole application
+Vue.use(BootstrapVue)
 
 /**
  * The following block of code may be used to automatically register your
@@ -39,7 +44,11 @@ Vue.component('MessageComponent', require('./components/MessageComponent.vue').d
  */
 axios.defaults.baseURL = 'http://appviru.herokuapp.com/api/';
 
+Vue.component('container', require('./containers/TheContainer.vue').default);
+
 const app = new Vue({
     el: '#app',
-    store
+    store,
+    router,
+    icons,
 });
