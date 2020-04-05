@@ -3,7 +3,6 @@
     <CCard>
       <CCardHeader>Lista Alumnos</CCardHeader>
       <CCardBody>
-
         <CDataTable
           class="mb-0 table-outline"
           hover
@@ -54,15 +53,39 @@
             <strong>{{item.activity}}</strong>
           </td>
         </CDataTable>
+
+
+
+          <CDataTable
+          class="mb-0 table-outline"
+          hover
+          :items="students"
+          :fields="cabeceras"
+          head-color="light"
+          no-sorting
+        >
+       
+          <td slot="name" slot-scope="{item}">
+            <div>{{item.name}}</div>
+          </td>
+          
+        </CDataTable>
       </CCardBody>
     </CCard>
     <!--  -->
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
+      cabeceras: [
+          { key: "avatar", label: "", _classes: "text-center" },
+          { key: "name", label: "Nombre", _classes: "text-center" },
+          { key: "promotion", label: "Promoción", _classes: "text-center" },
+          { key: "modulStatus", label: "Modulos Aprobados", _classes: "text-center" },
+      ],
       tableItems: [
         {
           avatar: { url: "img/avatars/1.jpg", status: "success" },
@@ -138,6 +161,12 @@ export default {
         { key: "activity" }
       ]
     };
+  },
+  created() {
+    this.$store.dispatch("getStudents");
+  },
+  computed: {
+    ...mapState(["students"])
   },
   methods: {
     color(value) {
