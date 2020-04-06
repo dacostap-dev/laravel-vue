@@ -13,9 +13,8 @@ class ModulsTableSeeder extends Seeder
      */
     public function run()
     {
-        $students = Student::select('id')->get();
-
-        for($i=0; $i<200; $i++){
+        for($i=0; $i<30; $i++){
+            $students = Student::has('moduls', '<' , Modul::TotalMaximo)->get();
             factory(Modul::class)->create([
                 'student_id' => $students->random()->id,
             ]);

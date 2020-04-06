@@ -19,4 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('notas', 'Note\NoteController')->except(['edit', 'create']);
+
+//Students
 Route::resource('students', 'Student\StudentController')->except(['edit', 'create']);
+Route::resource('students.moduls', 'Student\StudentModulController')->only(['index']);
