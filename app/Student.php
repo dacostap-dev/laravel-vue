@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Modul;
+use App\Promotion;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
@@ -11,11 +13,16 @@ class Student extends Model
     protected $appends = [
         'count_moduls',
         'moduls_complete',
-        'porcentaje'
+        'porcentaje',
+        'promotion_name'
     ];
 
     public function moduls(){
         return $this->hasMany(Modul::class);
+    }
+
+    public function promotion(){
+        return $this->belongsTo(Promotion::class);
     }
 
     public function getCountModulsAttribute()
@@ -31,5 +38,10 @@ class Student extends Model
     public function getPorcentajeAttribute()
     {
         return $this->count_moduls != 0 ? $this->moduls_complete * 100 / $this->count_moduls : 0 ;
+    }
+
+    public function getPromotionNameAttribute()
+    {
+        return $this->promotion()->first()->name; //checkear esto
     }
 }

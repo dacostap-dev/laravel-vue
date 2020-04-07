@@ -96,7 +96,7 @@ export default {
       cabeceras: [
         { key: "avatar", label: "", _classes: "text-center" },
         { key: "name", label: "Nombre", _classes: "text-center" },
-        { key: "promotion", label: "Promoción", _classes: "text-center" },
+        { key: "promotion_name", label: "Promoción", _classes: "text-center" },
         {
           key: "modulStatus",
           label: "Modulos Aprobados",
