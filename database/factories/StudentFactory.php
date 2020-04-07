@@ -13,5 +13,6 @@ $factory->define(Student::class, function (Faker $faker) {
         'name' => $faker->name($gender),
         'email' => $faker->unique()->safeEmail,
         'gender' => $gender,
+        'image' => $faker->randomElement(['6.jpg']),
     ];
 });

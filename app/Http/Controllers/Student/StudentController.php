@@ -33,7 +33,10 @@ class StudentController extends Controller
         ];
 
         $this->validate($request, $rules, $message);
-        $student = Student::create($request->all());
+        $data = $request->all();
+        $data['image']  = $request->image->store('');
+        
+        $student = Student::create($data);
         return $student;
     }
 

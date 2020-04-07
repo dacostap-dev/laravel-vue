@@ -62,6 +62,11 @@
           head-color="light"
           no-sorting
         >
+            <td slot="avatar" class="text-center" slot-scope="{item}">
+            <div class="c-avatar">
+              <img :src="`img/avatars/${item.image}`" class="c-avatar-img" alt />
+            </div>
+          </td>
           <td slot="name" slot-scope="{item}">
             <div>{{item.name}}</div>
           </td>

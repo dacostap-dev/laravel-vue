@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    protected $fillable = ['name', 'email', 'gender'];
+    protected $fillable = ['name', 'email', 'gender' , 'image'];
 
     protected $appends = [
         'count_moduls',
@@ -30,6 +30,6 @@ class Student extends Model
 
     public function getPorcentajeAttribute()
     {
-        return $this->moduls_complete * 100 / $this->count_moduls ;
+        return $this->count_moduls != 0 ? $this->moduls_complete * 100 / $this->count_moduls : 0 ;
     }
 }
