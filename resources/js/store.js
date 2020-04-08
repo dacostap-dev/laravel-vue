@@ -10,6 +10,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         notes: [],
+        students: [],
         noteSelected: "",
         message: { color: "success", text: "" },
         dismissSecs: 5,
@@ -48,6 +49,9 @@ export default new Vuex.Store({
       NoteDelete(state, note){
         const index = state.notes.findIndex(item => item.id === note.id); //obtenemos el index del elemento que coincide con el que eliminamos
         state.notes.splice(index, 1);
+      },
+      StudentsList(state, students){
+        state.students = students
       },
       SetMessage(state, message){
         state.message.text = message.texto
@@ -104,7 +108,17 @@ export default new Vuex.Store({
         catch (e) {
           console.log(e.response)
         }
-      }
+      },
+      async getStudents(context) {
+        try {
+          const res = await axios.get("/students")
+          context.commit('StudentsList', res.data)
+          console.log(res.data)
+        }
+        catch (e) {
+          console.log(e.response)
+        }
+      },
     },
     modules: {
     }

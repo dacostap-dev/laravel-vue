@@ -72,13 +72,7 @@
 
     <CRow>
       <CCol md="12">
-        <CCard>
-          <CCardHeader>
-            Traffic &amp; Sales
-          </CCardHeader>
-          <CCardBody>
-          </CCardBody>
-        </CCard>
+        <StudentListComponent/>  
       </CCol>
     </CRow>
   </div>
@@ -86,10 +80,12 @@
 
 <script>
 
+import StudentListComponent from '../components/StudentListComponent.vue'
 
 export default {
   name: 'Dashboard',
   components: {
+      StudentListComponent
   },
   data () {
     return {
