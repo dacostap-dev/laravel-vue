@@ -1,90 +1,51 @@
 <template>
   <div>
-    <CCard>
-      <CCardHeader>Lista Alumnos</CCardHeader>
-      <CCardBody>
-        <CDataTable
-          class="mb-0 table-outline"
-          hover
-          :items="tableItems"
-          :fields="tableFields"
-          head-color="light"
-          no-sorting
-        >
-          <td slot="avatar" class="text-center" slot-scope="{item}">
-            <div class="c-avatar">
-              <img :src="item.avatar.url" class="c-avatar-img" alt />
-              <span class="c-avatar-status" :class="`bg-${item.avatar.status || 'secondary'}`"></span>
-            </div>
-          </td>
-          <td slot="user" slot-scope="{item}">
-            <div>{{item.user.name}}</div>
-            <div class="small text-muted">
-              <span>
-                <template v-if="item.user.new">New</template>
-                <template v-else>Recurring</template>
-              </span>
-              | Registered: {{item.user.registered}}
-            </div>
-          </td>
-          <td slot="country" slot-scope="{item}" class="text-center">
-            <CIcon :name="item.country.flag" height="25" />
-          </td>
-          <td slot="usage" slot-scope="{item}">
-            <div class="clearfix">
-              <div class="float-left">
-                <strong>{{item.usage.value}}%</strong>
-              </div>
-              <div class="float-right">
-                <small class="text-muted">{{item.usage.period}}</small>
-              </div>
-            </div>
-            <CProgress
-              class="progress-xs"
-              v-model="item.usage.value"
-              :color="color(item.usage.value)"
-            />
-          </td>
-          <td slot="payment" slot-scope="{item}" class="text-center">
-            <CIcon :name="item.payment.icon" height="25" />
-          </td>
-          <td slot="activity" slot-scope="{item}">
-            <div class="small text-muted">Last login</div>
-            <strong>{{item.activity}}</strong>
-          </td>
-        </CDataTable>
-
-        <CDataTable
-          class="mb-0 table-outline"
-          hover
-          :items="students"
-          :fields="cabeceras"
-          head-color="light"
-          no-sorting
-        >
-            <td slot="avatar" class="text-center" slot-scope="{item}">
-            <div class="c-avatar">
-              <img :src="`img/avatars/${item.image}`" class="c-avatar-img" alt />
-            </div>
-          </td>
-          <td slot="name" slot-scope="{item}">
-            <div>{{item.name}}</div>
-          </td>
-          <td slot="modulStatus" slot-scope="{item}">
-            <div class="clearfix">
-              <div class="float-left">
-                <strong>{{ item.porcentaje }}%</strong>
-              </div>
-            </div>
-            <CProgress
-              class="progress-xs"
-              v-model="item.porcentaje"
-              :color="color(item.count_moduls, item.moduls_complete)"
-            />
-          </td>
-        </CDataTable>
-      </CCardBody>
-    </CCard>
+    <b-card header="Lista Alumnos">
+      <b-card-body>
+        <b-row class="justify-content-md-center">
+          <b-col cols="12">
+            <b-table
+              outlined
+              responsive
+              stacked="md"
+              hover
+              head-variant="light"
+              :items="students"
+              :fields="cabeceras"
+            >
+              <template v-slot:cell(avatar)="row">
+                <b-avatar variant="ligth" :src="`img/avatars/${row.item.image}`" class="ml-3"></b-avatar>
+              </template>
+              <template v-slot:cell(name)="row">
+                <div>{{row.item.name}}</div>
+                <div class="small text-muted">Registrado: {{row.item.created_at}}</div>
+              </template>
+              <template v-slot:cell(modulStatus)="row">
+                <div class="clearfix">
+                  <div class="float-right">
+                    <small class="text-muted">Tiene {{row.item.count_moduls}} módulos</small>
+                  </div>
+                </div>
+                <b-progress
+                  :variant="color(row.item.count_moduls, row.item.moduls_complete)"
+                  animated
+                >
+                  <b-progress-bar :value="row.item.porcentaje" :label="`${row.item.porcentaje}%`"></b-progress-bar>
+                </b-progress>
+              </template>
+              <template v-slot:cell(edit)="row">
+                <div class="text-center">
+                  <b-button variant="outline-primary">Editar</b-button>
+                </div>
+              </template>
+              <template v-slot:cell(destroy)="row">
+                <b-button variant="outline-danger">Eliminar</b-button>
+              </template>
+            </b-table>
+          </b-col>
+        </b-row>
+      </b-card-body>
+    </b-card>
     <!--  -->
   </div>
 </template>
@@ -94,106 +55,53 @@ export default {
   data() {
     return {
       cabeceras: [
-        { key: "avatar", label: "", _classes: "text-center" },
-        { key: "name", label: "Nombre", _classes: "text-center" },
-        { key: "promotion_name", label: "Promoción", _classes: "text-center" },
+        {
+          key: "avatar",
+          label: "",
+          thStyle: "width: 6rem",
+          class: "text-center"
+        },
+        { key: "name", label: "Nombre", thStyle: "width: 22rem" },
+        {
+          key: "promotion_name",
+          label: "Promoción",
+          class: "text-center",
+          thStyle: "width: 18rem"
+        },
         {
           key: "modulStatus",
           label: "Modulos Aprobados",
-          _classes: "text-center"
+          class: "text-center"
+        },
+        {
+          key: "edit",
+          label: "Editar",
+          class: "text-center",
+          thStyle: "width: 6rem"
+        },
+        {
+          key: "destroy",
+          label: "Eliminar",
+          class: "text-center",
+          thStyle: "width: 6rem"
         }
-      ],
-      tableItems: [
-        {
-          avatar: { url: "img/avatars/1.jpg", status: "success" },
-          user: {
-            name: "Yiorgos Avraamu",
-            new: true,
-            registered: "Jan 1, 2015"
-          },
-          country: { name: "USA", flag: "cif-us" },
-          usage: { value: 50, period: "Jun 11, 2015 - Jul 10, 2015" },
-          payment: { name: "Mastercard", icon: "cib-cc-mastercard" },
-          activity: "10 sec ago"
-        },
-        {
-          avatar: { url: "img/avatars/2.jpg", status: "danger" },
-          user: {
-            name: "Avram Tarasios",
-            new: false,
-            registered: "Jan 1, 2015"
-          },
-          country: { name: "Brazil", flag: "cif-br" },
-          usage: { value: 22, period: "Jun 11, 2015 - Jul 10, 2015" },
-          payment: { name: "Visa", icon: "cib-cc-visa" },
-          activity: "5 minutes ago"
-        },
-        {
-          avatar: { url: "img/avatars/3.jpg", status: "warning" },
-          user: { name: "Quintin Ed", new: true, registered: "Jan 1, 2015" },
-          country: { name: "India", flag: "cif-in" },
-          usage: { value: 74, period: "Jun 11, 2015 - Jul 10, 2015" },
-          payment: { name: "Stripe", icon: "cib-stripe" },
-          activity: "1 hour ago"
-        },
-        {
-          avatar: { url: "img/avatars/4.jpg", status: "" },
-          user: { name: "Enéas Kwadwo", new: true, registered: "Jan 1, 2015" },
-          country: { name: "France", flag: "cif-fr" },
-          usage: { value: 98, period: "Jun 11, 2015 - Jul 10, 2015" },
-          payment: { name: "PayPal", icon: "cib-paypal" },
-          activity: "Last month"
-        },
-        {
-          avatar: { url: "img/avatars/5.jpg", status: "success" },
-          user: {
-            name: "Agapetus Tadeáš",
-            new: true,
-            registered: "Jan 1, 2015"
-          },
-          country: { name: "Spain", flag: "cif-es" },
-          usage: { value: 22, period: "Jun 11, 2015 - Jul 10, 2015" },
-          payment: { name: "Google Wallet", icon: "cib-google-pay" },
-          activity: "Last week"
-        },
-        {
-          avatar: { url: "img/avatars/6.jpg", status: "danger" },
-          user: {
-            name: "Friderik Dávid",
-            new: true,
-            registered: "Jan 1, 2015"
-          },
-          country: { name: "Poland", flag: "cif-pl" },
-          usage: { value: 43, period: "Jun 11, 2015 - Jul 10, 2015" },
-          payment: { name: "Amex", icon: "cib-cc-amex" },
-          activity: "Last week"
-        }
-      ],
-      tableFields: [
-        { key: "avatar", label: "", _classes: "text-center" },
-        { key: "user", label: "Alumno" },
-        { key: "country", _classes: "text-center" },
-        { key: "usage", label: "Modulos Aprobados", _classes: "text-center" },
-        { key: "payment", label: "Payment method", _classes: "text-center" },
-        { key: "activity" }
       ]
     };
   },
   created() {
-    this.$store.dispatch("getStudents")
+    this.$store.dispatch("getStudents");
   },
   computed: {
-    ...mapState(["students"]),
+    ...mapState(["students"])
   },
   methods: {
     color(total, completados) {
       let $color;
-      let value = completados * 100 / total ;
+      let value = (completados * 100) / total;
 
-   /*    if(value == 100){
+      /*    if(value == 100){
          $color = "success";
       } */
-   
 
       if (value <= 25) {
         $color = "danger";

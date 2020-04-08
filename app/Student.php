@@ -42,6 +42,6 @@ class Student extends Model
 
     public function getPromotionNameAttribute()
     {
-        return $this->promotion()->first()->name; //checkear esto
+        return $this->promotion ? $this->promotion->name : ''; //checkear esto
     }
 }
