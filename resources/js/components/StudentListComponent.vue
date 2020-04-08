@@ -110,7 +110,10 @@ export default {
       } else if (value > 50 && value <= 75) {
         $color = "info";
       } else if (value > 75 && value <= 100) {
-        $color = "success";
+        if(total == 5){
+         $color = "success";  
+        }
+         $color = "primary"; 
       }
       return $color;
     }
