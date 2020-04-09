@@ -23,6 +23,12 @@ export default [
         icon: 'cil-drop'
       },
       {
+        _name: 'CSidebarNavItem',
+        name: 'Modulos',
+        to: '/modulos',
+        icon: 'cil-drop'
+      },
+      {
         _name: 'CSidebarNavTitle',
         _children: ['Components']
       },

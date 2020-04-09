@@ -12,6 +12,7 @@ export default new Vuex.Store({
     state: {
         notes: [],
         students: [],
+        moduls: [],
         noteSelected: "",
         message: { color: "success", text: "" },
         dismissSecs: 5,
@@ -59,6 +60,9 @@ export default new Vuex.Store({
         state.students[index].name = student.name;
         state.students[index].email = student.email;
       /*   state.students[index].porcentaje = 80; */
+      },
+      ModulsList(state, moduls){
+        state.moduls = moduls
       },
       SetMessage(state, message){
         state.message.text = message.texto
@@ -131,6 +135,16 @@ export default new Vuex.Store({
         try {
           const res = await axios.put('/students/' + params.id, params)
           context.commit('StudentUpdate', res.data)
+        }
+        catch (e) {
+          console.log(e.response)
+        }
+      },
+      async getModulsByStudent(context, student) {
+        try {
+          const res = await axios.get("/students/"+student+"/moduls")
+          context.commit('ModulsList', res.data)
+          console.log(res.data)
         }
         catch (e) {
           console.log(e.response)

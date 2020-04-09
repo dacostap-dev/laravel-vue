@@ -12,6 +12,9 @@
               head-variant="light"
               :items="students"
               :fields="cabeceras"
+              selectable
+              select-mode="single"
+              @row-selected="onRowSelected"
             >
               <template v-slot:cell(avatar)="row">
                 <b-avatar variant="ligth" :src="`img/avatars/${row.item.image}`" class="ml-3"></b-avatar>
@@ -124,9 +127,14 @@ export default {
     this.$store.dispatch("getStudents");
   },
   computed: {
-    ...mapState(["students", "modelEdit"]),
+    ...mapState(["students", "modelEdit"])
   },
   methods: {
+    onRowSelected(items) {
+      console.log(items[0].id);
+      this.$store.dispatch("getModulsByStudent", items[0].id);
+      this.$router.push("/modulos/" + items[0].id);
+    },
     editar(model) {
       this.$store.commit("ModelEdit", Object.assign({}, model));
       this.$refs["modal_update"].show();
@@ -172,9 +180,7 @@ export default {
 
       this.$store
         .dispatch("updateStudent", this.modelEdit)
-        .then(res => {
-      
-        })
+        .then(res => {})
         .catch(e => {
           console.log(e.response);
         });
