@@ -13,6 +13,7 @@ export default new Vuex.Store({
         notes: [],
         students: [],
         moduls: [],
+        modulSelected: null,
         noteSelected: "",
         message: { color: "success", text: "" },
         dismissSecs: 5,
@@ -20,9 +21,25 @@ export default new Vuex.Store({
         editar: false,
         modelEdit: { id: "", nombre: "", descripcion: "" },
         sidebarShow: 'responsive',
-        sidebarMinimize: false
+        sidebarMinimize: false,
+        datasets: [
+          {
+            data: [10, 40],
+            backgroundColor: ["#f36e60", "#ffdb3b", "#185190"],
+            hoverBackgroundColor: ["#fbd2cd", "#fef5c9", "#d1e3f7"]
+          },
+          {
+            data: [50, 50],
+            backgroundColor: ["#f36e60", "#ffdb3b", "#185190"],
+            hoverBackgroundColor: ["#fbd2cd", "#fef5c9", "#d1e3f7"]
+          }
+        ],
     },
     mutations: {
+      UpdateDataset (state) {
+        state.datasets[0].data = [30, 30],
+        console.log(state.datasets[0].data[0])
+      },
       toggleSidebarDesktop (state) {
         const sidebarOpened = [true, 'responsive'].includes(state.sidebarShow)
         state.sidebarShow = sidebarOpened ? false : 'responsive'
@@ -63,6 +80,9 @@ export default new Vuex.Store({
       },
       ModulsList(state, moduls){
         state.moduls = moduls
+      },
+      ModulSelected(state, modul){
+        state.modulSelected = modul
       },
       SetMessage(state, message){
         state.message.text = message.texto

@@ -132,7 +132,7 @@ export default {
   methods: {
     onRowSelected(items) {
       console.log(items[0].id);
-      this.$store.dispatch("getModulsByStudent", items[0].id);
+      this.$store.dispatch("getModulsByStudent", items[0].id); //Puede que ya no se necesite, evaluar tiempos de carga
       this.$router.push("/modulos/" + items[0].id);
     },
     editar(model) {

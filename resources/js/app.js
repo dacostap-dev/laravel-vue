@@ -16,8 +16,12 @@ import BootstrapVue from 'bootstrap-vue' //Importing
 import CoreuiVue from '@coreui/vue'
 import { iconsSet as icons } from '../icons/icons.js'
 
+import "chart.js";
+import "hchs-vue-charts";
+
 Vue.use(CoreuiVue) // Telling Vue to use this in whole application
 Vue.use(BootstrapVue)
+Vue.use(window.VueCharts);
 
 /**
  * The following block of code may be used to automatically register your
