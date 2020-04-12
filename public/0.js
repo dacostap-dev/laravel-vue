@@ -28,9 +28,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["modul"],
@@ -52,17 +50,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   components: {},
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["moduls", "datasets", "modulSelected"]), {
-    data: function data() {
-      return [{
-        data: [this.modul.items_complete, this.modul.total_items - this.modul.items_complete],
-        backgroundColor: ["#185190", "#f36e60"],
-        hoverBackgroundColor: ["#d1e3f7", "#fbd2cd"]
-      }];
-    },
+  created: function created() {
+    this.$store.commit("SetDraw", this.modul); //primero todos envian su data al store, luego se obtiene su respetivo grafico por modul_id
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['getGraphic']), {
+    drawByModul: function drawByModul() {
+      return [this.getGraphic(this.modul.id)]; //se retorna en forma de arreglo porque sino no funciona el grafico
+    }
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["modulSelected"]), {
     selected: function selected() {
       if (this.modulSelected != null) {
-        return this.modul == this.modulSelected;
+        return this.modul.id == this.modulSelected.id;
       }
 
       return false;
@@ -70,10 +68,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   methods: {
     select: function select() {
-      this.$store.commit("ModulSelected", this.modul);
-    },
-    cambiar: function cambiar() {
-      this.$store.commit("UpdateDataset");
+      this.$store.commit("ModulSelected", Object.assign({}, this.modul));
     }
   }
 });
@@ -120,11 +115,56 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      btn: false
+    };
   },
   components: {
     ModulComponent: _components_Modul_ModulComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -136,8 +176,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.dispatch("getModulsByStudent", this.$route.params.studentId);
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["moduls", "datasets", "modulSelected"])),
-  methods: {}
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["moduls", "modulSelected"])),
+  methods: {
+    updateModul: function updateModul() {
+      var _this = this;
+
+      this.btn = true;
+      this.$store.dispatch("updateModul", this.modulSelected).then(function (res) {
+        _this.btn = false;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -173,7 +222,7 @@ var render = function() {
       _c("chartjs-doughnut", {
         attrs: {
           bind: true,
-          datasets: _vm.data,
+          datasets: _vm.drawByModul,
           labels: _vm.labels,
           option: _vm.option
         }
@@ -254,9 +303,173 @@ var render = function() {
               _c(
                 "b-card-body",
                 [
-                  _c("b-row", { staticClass: "justify-content-md-center" }, [
-                    _vm._v("\n        xd\n      ")
-                  ])
+                  _c(
+                    "b-row",
+                    { staticClass: "justify-content-md-center" },
+                    [
+                      _c(
+                        "b-col",
+                        { attrs: { cols: "12" } },
+                        [
+                          _c(
+                            "b-form",
+                            {
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.updateModul()
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    "label-align": "left",
+                                    label: "Nombre:"
+                                  }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      required: "",
+                                      name: "name",
+                                      placeholder:
+                                        "Ingresa el asesor de la promoción"
+                                    },
+                                    model: {
+                                      value: _vm.modulSelected.name,
+                                      callback: function($$v) {
+                                        _vm.$set(_vm.modulSelected, "name", $$v)
+                                      },
+                                      expression: "modulSelected.name"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    "label-align": "left",
+                                    label: "Fecha de Solicitud:"
+                                  }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      name: "text",
+                                      placeholder: "dd/mm/yyyy"
+                                    },
+                                    model: {
+                                      value: _vm.modulSelected.solicitud,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.modulSelected,
+                                          "solicitud",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "modulSelected.solicitud"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    "label-align": "left",
+                                    label: "Fecha de Memorandum:"
+                                  }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      name: "text",
+                                      placeholder: "dd/mm/yyyy"
+                                    },
+                                    model: {
+                                      value: _vm.modulSelected.memorandum,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.modulSelected,
+                                          "memorandum",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "modulSelected.memorandum"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-form-group",
+                                {
+                                  attrs: {
+                                    "label-align": "left",
+                                    label: "Fecha de Informe:"
+                                  }
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    attrs: {
+                                      type: "text",
+                                      name: "text",
+                                      placeholder: "dd/mm/yyyy"
+                                    },
+                                    model: {
+                                      value: _vm.modulSelected.informe,
+                                      callback: function($$v) {
+                                        _vm.$set(
+                                          _vm.modulSelected,
+                                          "informe",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "modulSelected.informe"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-button",
+                                {
+                                  staticClass: "ml-2",
+                                  attrs: {
+                                    disabled: _vm.btn,
+                                    type: "submit",
+                                    variant: "primary"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n              Guardar\n              "
+                                  ),
+                                  _c("i", { staticClass: "fas fa-save" })
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
                 ],
                 1
               )
