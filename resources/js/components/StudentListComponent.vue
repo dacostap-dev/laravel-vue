@@ -132,8 +132,9 @@ export default {
   methods: {
     onRowSelected(items) {
       console.log(items[0].id);
-      this.$store.dispatch("getModulsByStudent", items[0].id); //Puede que ya no se necesite, evaluar tiempos de carga
-      this.$router.push("/modulos/" + items[0].id);
+      this.$store.dispatch("getModulsByStudent", items[0].id).then(res => {
+        this.$router.push("/modulos/" + items[0].id); //Esperar que de carguen los modulos, para que tenga la data para crear los graficos al llegar a esa ruta
+      }); 
     },
     editar(model) {
       this.$store.commit("ModelEdit", Object.assign({}, model));
