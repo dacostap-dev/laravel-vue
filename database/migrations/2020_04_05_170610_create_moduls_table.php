@@ -16,6 +16,9 @@ class CreateModulsTable extends Migration
         Schema::create('moduls', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('solicitud')->nullable();
+            $table->string('memorandum')->nullable();
+            $table->string('informe')->nullable();
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
             $table->timestamps();

@@ -46,7 +46,7 @@ class StudentController extends Controller
             $student->name = $request->name;
         }
         if($request->has('email')){
-            $studentv->email = $request->email;
+            $student->email = $request->email;
         }
         if($request->has('gender')){
             $student->gender = $request->gender;
