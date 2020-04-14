@@ -15,7 +15,7 @@ class Modul extends Model
     ];
 
     protected $fillable = [
-        'name', 
+        'name', 'solicitud', 'memorandum', 'informe', 'student_id'
     ];
     
     public function student(){

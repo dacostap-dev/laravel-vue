@@ -15,7 +15,8 @@ export default new Vuex.Store({
     moduls: [],
     modulSelected: null,
     noteSelected: "",
-    message: { color: "success", text: "" },
+    message: { title: "", text: "", color: "success" },
+    show: false,
     dismissSecs: 5,
     dismissCountDown: 0,
     editar: false,
@@ -79,6 +80,9 @@ export default new Vuex.Store({
     ModulSelected(state, modul) {
       state.modulSelected = modul
     },
+    ModulStore(state, modul) {
+      state.moduls.push(modul);
+    },
     ModulUpdate(state, modul) {
       const index = state.moduls.findIndex(m => m.id == modul.id);
       state.moduls[index].name = modul.name;
@@ -93,9 +97,9 @@ export default new Vuex.Store({
       state.datasets[index].data = [modul.items_complete, modul.total_items - modul.items_complete]
     },
     SetMessage(state, message) {
-      state.message.text = message.texto
+      state.message.title = message.title
+      state.message.text = message.text
       state.message.color = message.color
-      state.dismissCountDown = state.dismissSecs
     },
   },
   actions: {
@@ -177,6 +181,16 @@ export default new Vuex.Store({
         console.log(e.response)
       }
     },
+    async storeModul(context, params) {
+      try {
+        const res = await axios.post('/students/' + params.student_id + '/moduls', params.modul)
+        console.log(res)
+        context.commit('ModulStore', res.data)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    },
     async updateModul(context, params) {
       try {
         const res = await axios.put('/moduls/' + params.id, params)
@@ -192,7 +206,6 @@ export default new Vuex.Store({
     getGraphic: (state) => (id) => {
       return state.datasets.find(todo => todo.modul === id)
     }
-  
   },
   modules: {
   }
