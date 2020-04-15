@@ -19,8 +19,7 @@ class CreateModulsTable extends Migration
             $table->string('solicitud')->nullable();
             $table->string('memorandum')->nullable();
             $table->string('informe')->nullable();
-            $table->unsignedBigInteger('student_id');
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete(); //nuevos metodos laravel 7
             $table->timestamps();
         });
     }
