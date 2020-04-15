@@ -36,12 +36,10 @@ export default {
   },
   components: {},
   created() {
-    this.$store.commit("SetDraw", this.modul);  //primero todos envian su data al store, luego se obtiene su respetivo grafico por modul_id
+    this.$store.commit("modules/SetDraw", this.modul);  //primero todos envian su data al store, luego se obtiene su respetivo grafico por modul_id
   },
   computed: {
-    ...mapGetters([
-      'getGraphic',
-    ]),
+    ...mapGetters('modules', ['getGraphic']),
     drawByModul(){
       return [this.getGraphic(this.modul.id)] //se retorna en forma de arreglo porque sino no funciona el grafico
     },

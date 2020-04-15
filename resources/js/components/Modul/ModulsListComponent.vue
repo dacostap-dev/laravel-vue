@@ -105,7 +105,7 @@
   </div>
 </template>
 <script>
-import ModulComponent from "../components/Modul/ModulComponent.vue";
+import ModulComponent from "./ModulComponent";
 import { mapState } from "vuex";
 export default {
   data() {
@@ -129,16 +129,17 @@ export default {
   mounted() {
     console.log(this.$route.params.studentId);
     if (this.$route.params.studentId) {
-      this.$store.dispatch("getModulsByStudent", this.$route.params.studentId);
+      this.$store.dispatch("modules/getModulsByStudent", this.$route.params.studentId);
     }
   },
   computed: {
-    ...mapState(["moduls", "modulSelected"])
+    ...mapState(["modulSelected"]),
+     ...mapState("modules", ["moduls"])
   },
   methods: {
     updateModul() {
       this.btn = true;
-      this.$store.dispatch("updateModul", this.modulSelected).then(res => {
+      this.$store.dispatch("modules/updateModul", this.modulSelected).then(res => {
         this.btn = false;
       });
     },
@@ -157,7 +158,7 @@ export default {
       }
 
       this.$store
-        .dispatch("storeModul", {
+        .dispatch("modules/storeModul", {
           student_id: this.$route.params.studentId,
           modul: this.newModul
         })

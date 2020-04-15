@@ -22,12 +22,12 @@ function configRoutes() {
         {
             path: '/notas',
             name: 'Notas',
-            component: () => import('./components/ModulsListComponent')
+            component: () => import('./components/Modul/ModulsListComponent')
         },
         {
             path: '/modulos/:studentId',
             name: 'Modulos',
-            component: () => import('./components/ModulsListComponent')
+            component: () => import('./components/Modul/ModulsListComponent')
         },
     ]
 }

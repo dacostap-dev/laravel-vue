@@ -116,7 +116,6 @@ export default {
           thStyle: "width: 6rem"
         }
       ],
-      show: false,
       nombre: "",
       nameState: "",
       email: "",
@@ -124,15 +123,16 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("getStudents");
+    this.$store.dispatch("students/getStudents");
   },
   computed: {
-    ...mapState(["students", "modelEdit"])
+    ...mapState(['modelEdit']),
+    ...mapState('students', ["students"])
   },
   methods: {
     onRowSelected(items) {
       console.log(items[0].id);
-      this.$store.dispatch("getModulsByStudent", items[0].id).then(res => {
+      this.$store.dispatch("modules/getModulsByStudent", items[0].id).then(res => {
         this.$router.push("/modulos/" + items[0].id); //Esperar que de carguen los modulos, para que tenga la data para crear los graficos al llegar a esa ruta
       });
     },
@@ -143,7 +143,7 @@ export default {
     },
     eliminar(model) {
       console.log(model);
-      this.$store.dispatch("deleteStudent", model);
+      this.$store.dispatch("students/deleteStudent", model);
     },
     color(total, completados) {
       let $color;
@@ -181,19 +181,11 @@ export default {
       }
 
       this.$store
-        .dispatch("updateStudent", this.modelEdit)
+        .dispatch("students/updateStudent", this.modelEdit)
         .then(res => {})
         .catch(e => {
           console.log(e.response);
         });
-
-      /*    this.nombreCompleto = this.apellido + " " + this.nombre;
-      this.$store.dispatch("postStudent", {
-        name: this.nombreCompleto,
-        email: this.email,
-        genero: this.genero,
-        promotion_id: this.promotionSelected.id
-      }); */
 
       this.$nextTick(() => {
         this.$refs.modal_update.hide();
