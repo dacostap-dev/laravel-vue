@@ -6,7 +6,7 @@ import router from './router';
 import students from './modules/students'
 import modules from './modules/modules'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000';
+axios.defaults.baseURL = 'http://appviru.herokuapp.com';
 
 Vue.use(Vuex)
 
