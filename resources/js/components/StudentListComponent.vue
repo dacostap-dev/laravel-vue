@@ -134,15 +134,16 @@ export default {
       console.log(items[0].id);
       this.$store.dispatch("getModulsByStudent", items[0].id).then(res => {
         this.$router.push("/modulos/" + items[0].id); //Esperar que de carguen los modulos, para que tenga la data para crear los graficos al llegar a esa ruta
-      }); 
+      });
     },
     editar(model) {
       this.$store.commit("ModelEdit", Object.assign({}, model));
       this.$refs["modal_update"].show();
       console.log(model);
     },
-    eliminar(id) {
-      console.log(id);
+    eliminar(model) {
+      console.log(model);
+      this.$store.dispatch("deleteStudent", model);
     },
     color(total, completados) {
       let $color;

@@ -28,6 +28,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -158,12 +159,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      btn: false
+      btn: false,
+      newModul: {
+        name: "",
+        solicitud: "",
+        memorandum: "",
+        informe: ""
+      },
+      nameState: "",
+      solicitudState: "",
+      memoState: "",
+      informeState: ""
     };
   },
   components: {
@@ -185,6 +236,57 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.dispatch("updateModul", this.modulSelected).then(function (res) {
         _this.btn = false;
       });
+    },
+    storeModul: function storeModul() {
+      this.$refs["modul_store"].show();
+    },
+    handleOk: function handleOk(bvModalEvt) {
+      bvModalEvt.preventDefault(); // Trigger submit handler
+
+      this.handleSubmit();
+    },
+    handleSubmit: function handleSubmit() {
+      var _this2 = this;
+
+      // Exit when the form isn't valid
+      if (!this.checkFormValidity()) {
+        return;
+      }
+
+      this.$store.dispatch("storeModul", {
+        student_id: this.$route.params.studentId,
+        modul: this.newModul
+      }).then(function (res) {})["catch"](function (e) {
+        _this2.$bvToast.toast("Algo Salió mal", {
+          title: "Error !",
+          variant: "danger",
+          solid: true
+        });
+      });
+      this.$nextTick(function () {
+        _this2.$refs.modul_store.hide();
+      });
+    },
+    checkFormValidity: function checkFormValidity() {
+      // const valid = this.$refs.form.checkValidity();
+      var valid = this.newModul.name == "" ? false : true;
+      console.log(valid);
+      this.nameState = this.newModul.name == "" ? valid : true;
+      /*      this.solicitudState = this.newModul.solicitud == "" ? valid : true;
+      this.memoState = this.newModul.memorandum == "" ? valid : true;
+      this.informeState = this.newModul.informe == "" ? valid : true; */
+
+      return valid;
+    },
+    resetModal: function resetModal() {
+      this.newModul.name = "";
+      this.newModul.solicitud = "";
+      this.newModul.memorandum = "";
+      this.newModul.informe = "";
+      this.nameState = null;
+      this.solicitudState = null;
+      this.memoState = null;
+      this.informeState = null;
     }
   }
 });
@@ -210,6 +312,7 @@ var render = function() {
     "b-card",
     {
       staticClass: "text-center",
+      staticStyle: { "max-width": "20rem" },
       attrs: {
         header: _vm.modul.name,
         "border-variant": _vm.selected ? "primary" : "",
@@ -257,9 +360,196 @@ var render = function() {
     "div",
     [
       _c(
-        "b-card",
-        { attrs: { header: "Lista de Modulos" } },
+        "b-modal",
+        {
+          ref: "modul_store",
+          attrs: {
+            "header-text-variant": "white",
+            "header-bg-variant": "dark",
+            centered: "",
+            title: "Crear Modulo"
+          },
+          on: { show: _vm.resetModal, hidden: _vm.resetModal, ok: _vm.handleOk }
+        },
         [
+          _c(
+            "b-form",
+            {
+              ref: "form",
+              staticClass: "m-3",
+              on: {
+                submit: function($event) {
+                  $event.stopPropagation()
+                  $event.preventDefault()
+                  return _vm.handleSubmit($event)
+                }
+              }
+            },
+            [
+              _c(
+                "b-form-group",
+                {
+                  attrs: {
+                    "label-align": "left",
+                    "label-cols": "4",
+                    "label-cols-lg": "3",
+                    label: "Nombre:"
+                  }
+                },
+                [
+                  _c("b-form-input", {
+                    attrs: { state: _vm.nameState, required: "" },
+                    model: {
+                      value: _vm.newModul.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newModul, "name", $$v)
+                      },
+                      expression: "newModul.name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-form-group",
+                {
+                  attrs: {
+                    "label-align": "left",
+                    "label-cols": "4",
+                    "label-cols-lg": "3",
+                    label: "Solicitud:"
+                  }
+                },
+                [
+                  _c("b-form-input", {
+                    attrs: { state: _vm.solicitudState, required: "" },
+                    model: {
+                      value: _vm.newModul.solicitud,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newModul, "solicitud", $$v)
+                      },
+                      expression: "newModul.solicitud"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-form-group",
+                {
+                  attrs: {
+                    "label-align": "left",
+                    "label-cols": "4",
+                    "label-cols-lg": "3",
+                    label: "Memorandum:"
+                  }
+                },
+                [
+                  _c("b-form-input", {
+                    attrs: { state: _vm.memoState, required: "" },
+                    model: {
+                      value: _vm.newModul.memorandum,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newModul, "memorandum", $$v)
+                      },
+                      expression: "newModul.memorandum"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-form-group",
+                {
+                  attrs: {
+                    "label-align": "left",
+                    "label-cols": "4",
+                    "label-cols-lg": "3",
+                    label: "Informe:"
+                  }
+                },
+                [
+                  _c("b-form-input", {
+                    attrs: { state: _vm.informeState, required: "" },
+                    model: {
+                      value: _vm.newModul.informe,
+                      callback: function($$v) {
+                        _vm.$set(_vm.newModul, "informe", $$v)
+                      },
+                      expression: "newModul.informe"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-card",
+        {
+          attrs: { "header-tag": "header" },
+          scopedSlots: _vm._u([
+            {
+              key: "header",
+              fn: function() {
+                return [
+                  _c(
+                    "b-row",
+                    { attrs: { "align-h": "around" } },
+                    [
+                      _c("b-col", { attrs: { cols: "6" } }, [
+                        _vm._v("\n          Lista de módulos\n        ")
+                      ]),
+                      _vm._v(" "),
+                      _c("b-col", { attrs: { cols: "5" } }, [
+                        _c(
+                          "div",
+                          { staticClass: "float-right" },
+                          [
+                            _c(
+                              "b-button",
+                              {
+                                attrs: {
+                                  size: "sm",
+                                  variant: "outline-primary"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.storeModul()
+                                  }
+                                }
+                              },
+                              [
+                                _c("b-icon", {
+                                  attrs: { icon: "plus-circle" }
+                                }),
+                                _vm._v(" Nuevo\n            ")
+                              ],
+                              1
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ],
+                    1
+                  )
+                ]
+              },
+              proxy: true
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
           _c(
             "b-card-body",
             [

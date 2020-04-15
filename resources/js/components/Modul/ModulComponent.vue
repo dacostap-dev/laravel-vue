@@ -1,6 +1,7 @@
 <template>
   <b-card
     :header="modul.name"
+    style="max-width: 20rem;"
     class="text-center"
     @click="select"
     :border-variant="selected ? 'primary': ''"

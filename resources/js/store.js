@@ -14,7 +14,8 @@ export default new Vuex.Store({
     moduls: [],
     modulSelected: null,
     noteSelected: "",
-    message: { color: "success", text: "" },
+    message: { title: "", text: "", color: "success" },
+    show: false,
     dismissSecs: 5,
     dismissCountDown: 0,
     editar: false,
@@ -72,11 +73,18 @@ export default new Vuex.Store({
       state.students[index].email = student.email;
       /*   state.students[index].porcentaje = 80; */
     },
+    StudentDelete(state, student) {
+      const index = state.students.findIndex(item => item.id === student.id); //obtenemos el index del elemento que coincide con el que eliminamos
+      state.students.splice(index, 1);
+    },
     ModulsList(state, moduls) {
       state.moduls = moduls
     },
     ModulSelected(state, modul) {
       state.modulSelected = modul
+    },
+    ModulStore(state, modul) {
+      state.moduls.push(modul);
     },
     ModulUpdate(state, modul) {
       const index = state.moduls.findIndex(m => m.id == modul.id);
@@ -92,9 +100,9 @@ export default new Vuex.Store({
       state.datasets[index].data = [modul.items_complete, modul.total_items - modul.items_complete]
     },
     SetMessage(state, message) {
-      state.message.text = message.texto
+      state.message.title = message.title
+      state.message.text = message.text
       state.message.color = message.color
-      state.dismissCountDown = state.dismissSecs
     },
   },
   actions: {
@@ -167,6 +175,16 @@ export default new Vuex.Store({
         console.log(e.response)
       }
     },
+    async deleteStudent(context, params) {
+      try {
+        const res = await axios
+          .delete("/students/" + params.id)
+        context.commit('StudentDelete', res.data)
+      }
+      catch (e) {
+        console.log(e.response)
+      }
+    },
     async getModulsByStudent(context, student) {
       try {
         const res = await axios.get("/students/" + student + "/moduls")
@@ -174,6 +192,16 @@ export default new Vuex.Store({
       }
       catch (e) {
         console.log(e.response)
+      }
+    },
+    async storeModul(context, params) {
+      try {
+        const res = await axios.post('/students/' + params.student_id + '/moduls', params.modul)
+        console.log(res)
+        context.commit('ModulStore', res.data)
+      }
+      catch (e) {
+        console.log(e)
       }
     },
     async updateModul(context, params) {
@@ -191,7 +219,6 @@ export default new Vuex.Store({
     getGraphic: (state) => (id) => {
       return state.datasets.find(todo => todo.modul === id)
     }
-  
   },
   modules: {
   }

@@ -22,7 +22,7 @@ Route::resource('notas', 'Note\NoteController')->except(['edit', 'create']);
 
 //Students
 Route::resource('students', 'Student\StudentController')->except(['edit', 'create']);
-Route::resource('students.moduls', 'Student\StudentModulController')->only(['index']);
+Route::resource('students.moduls', 'Student\StudentModulController')->only(['index', 'store']);
 
 //Moduls
 Route::resource('moduls', 'Modul\ModulController')->except(['edit', 'create']);

@@ -22,7 +22,7 @@ function configRoutes() {
         {
             path: '/notas',
             name: 'Notas',
-            component: () => import('./components/NoteListComponent')
+            component: () => import('./components/ModulsListComponent')
         },
         {
             path: '/modulos/:studentId',

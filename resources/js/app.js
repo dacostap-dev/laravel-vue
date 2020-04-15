@@ -17,10 +17,12 @@ import BootstrapVue from 'bootstrap-vue' //Importing
 
 import CoreuiVue from '@coreui/vue'
 import { iconsSet as icons } from '../icons/icons.js'
+import { IconsPlugin } from 'bootstrap-vue'
 
 import "chart.js";
 import "hchs-vue-charts";
 
+Vue.use(IconsPlugin)
 Vue.use(CoreuiVue) // Telling Vue to use this in whole application
 Vue.use(BootstrapVue)
 Vue.use(window.VueCharts);
@@ -36,9 +38,6 @@ Vue.use(window.VueCharts);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('note-list', require('./components/NoteListComponent.vue').default);
-Vue.component('note', require('./components/NoteComponent.vue').default);
 Vue.component('MessageComponent', require('./components/MessageComponent.vue').default);
 
 /**
