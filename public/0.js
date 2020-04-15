@@ -28,6 +28,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -311,6 +312,7 @@ var render = function() {
     "b-card",
     {
       staticClass: "text-center",
+      staticStyle: { "max-width": "20rem" },
       attrs: {
         header: _vm.modul.name,
         "border-variant": _vm.selected ? "primary" : "",
@@ -503,12 +505,9 @@ var render = function() {
                     "b-row",
                     { attrs: { "align-h": "around" } },
                     [
-                      _c(
-                        "b-col",
-                        { attrs: { cols: "6" } },
-                        [_c("h7", {}, [_vm._v("Lista de modulos")])],
-                        1
-                      ),
+                      _c("b-col", { attrs: { cols: "6" } }, [
+                        _vm._v("\n          Lista de módulos\n        ")
+                      ]),
                       _vm._v(" "),
                       _c("b-col", { attrs: { cols: "5" } }, [
                         _c(

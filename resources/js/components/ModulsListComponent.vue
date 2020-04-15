@@ -30,7 +30,7 @@
       <template v-slot:header>
         <b-row align-h="around">
           <b-col cols="6">
-            <h7 class>Lista de modulos</h7>
+            Lista de módulos
           </b-col>
           <b-col cols="5">
             <div class="float-right">
