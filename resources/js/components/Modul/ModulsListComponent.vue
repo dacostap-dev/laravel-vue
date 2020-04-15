@@ -105,7 +105,7 @@
   </div>
 </template>
 <script>
-import ModulComponent from "../components/Modul/ModulComponent.vue";
+import ModulComponent from "./ModulComponent";
 import { mapState } from "vuex";
 export default {
   data() {
