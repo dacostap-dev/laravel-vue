@@ -52,9 +52,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   components: {},
   created: function created() {
-    this.$store.commit("SetDraw", this.modul); //primero todos envian su data al store, luego se obtiene su respetivo grafico por modul_id
+    this.$store.commit("modules/SetDraw", this.modul); //primero todos envian su data al store, luego se obtiene su respetivo grafico por modul_id
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['getGraphic']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])('modules', ['getGraphic']), {
     drawByModul: function drawByModul() {
       return [this.getGraphic(this.modul.id)]; //se retorna en forma de arreglo porque sino no funciona el grafico
     }
@@ -224,16 +224,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     console.log(this.$route.params.studentId);
 
     if (this.$route.params.studentId) {
-      this.$store.dispatch("getModulsByStudent", this.$route.params.studentId);
+      this.$store.dispatch("modules/getModulsByStudent", this.$route.params.studentId);
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["moduls", "modulSelected"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(["modulSelected"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])("modules", ["moduls"])),
   methods: {
     updateModul: function updateModul() {
       var _this = this;
 
       this.btn = true;
-      this.$store.dispatch("updateModul", this.modulSelected).then(function (res) {
+      this.$store.dispatch("modules/updateModul", this.modulSelected).then(function (res) {
         _this.btn = false;
       });
     },
@@ -253,7 +253,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      this.$store.dispatch("storeModul", {
+      this.$store.dispatch("modules/storeModul", {
         student_id: this.$route.params.studentId,
         modul: this.newModul
       }).then(function (res) {})["catch"](function (e) {
