@@ -3,14 +3,10 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router';
 
-<<<<<<< HEAD
-axios.defaults.baseURL = 'http://appviru.herokuapp.com/';
-=======
 import students from './modules/students'
 import modules from './modules/modules'
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
->>>>>>> dev
 
 Vue.use(Vuex)
 
