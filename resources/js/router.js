@@ -20,6 +20,20 @@ function configRoutes() {
             component: () => import('./views/Dashboard')
         },
         {
+            path: '/promotions',
+            name: 'Promociones',
+            component: () => import('./components/Promotion/PromotionListComponent')
+        },
+        {
+            path: '/students',
+            name: 'Alumnos',
+            component: () => import('./components/StudentListComponent'),
+            children: [{
+                path: ':promotionId',
+                component: () => import('./components/Promotion/PromotionListComponent')
+              }],
+        },
+        {
             path: '/notas',
             name: 'Notas',
             component: () => import('./components/Modul/ModulsListComponent')

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card header="Lista Alumnos">
+    <b-card header="Lista de Promociones">
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
@@ -10,27 +10,27 @@
               stacked="md"
               hover
               head-variant="light"
-              :items="students"
+              :items="promotions"
               :fields="cabeceras"
               selectable
               select-mode="single"
               @row-selected="onRowSelected"
             >
-              <template v-slot:cell(avatar)="row">
-                <b-avatar variant="ligth" :src="`img/avatars/${row.item.image}`" class="ml-3"></b-avatar>
-              </template>
               <template v-slot:cell(name)="row">
                 <div>{{row.item.name}}</div>
                 <div class="small text-muted">Registrado: {{row.item.created_at}}</div>
               </template>
-              <template v-slot:cell(modulStatus)="row">
+              <template v-slot:cell(programa_name)="row">
+                <div>Industrias alimentarias</div>
+              </template>
+              <template v-slot:cell(studentsStatus)="row">
                 <div class="clearfix">
                   <div class="float-right">
-                    <small class="text-muted">Tiene {{row.item.count_moduls}} módulos</small>
+                    <small class="text-muted">Tiene {{row.item.total_alumnos}} alumnos</small>
                   </div>
                 </div>
                 <b-progress
-                  :variant="color(row.item.count_moduls, row.item.moduls_complete)"
+                  :variant="color(row.item.total_alumnos, row.item.alumnos_aprobados)"
                   animated
                 >
                   <b-progress-bar :value="row.item.porcentaje" :label="`${row.item.porcentaje}%`"></b-progress-bar>
@@ -65,16 +65,6 @@
         <b-form-group label-align="left" label-cols="4" label-cols-lg="3" label="Nombre:">
           <b-form-input v-model="modelEdit.name" :state="nameState" required></b-form-input>
         </b-form-group>
-
-        <b-form-group label-align="left" label-cols="4" label-cols-lg="3" label="Email:">
-          <b-form-input
-            v-model="modelEdit.email"
-            type="email"
-            :state="emailState"
-            placeholder="example@hotmail.com"
-            required
-          ></b-form-input>
-        </b-form-group>
       </b-form>
     </b-modal>
   </div>
@@ -85,22 +75,16 @@ export default {
   data() {
     return {
       cabeceras: [
-        {
-          key: "avatar",
-          label: "",
-          thStyle: "width: 6rem",
-          class: "text-center"
-        },
         { key: "name", label: "Nombre", thStyle: "width: 22rem" },
         {
-          key: "promotion_name",
-          label: "Promoción",
+          key: "programa_name",
+          label: "Programa",
           class: "text-center",
           thStyle: "width: 18rem"
         },
         {
-          key: "modulStatus",
-          label: "Modulos Aprobados",
+          key: "studentsStatus",
+          label: "Alumnos Aprobados",
           class: "text-center"
         },
         {
@@ -118,28 +102,22 @@ export default {
       ],
       nombre: "",
       nameState: "",
-      email: "",
-      emailState: ""
     };
   },
-  created() { //podría ser mountend
-    if (this.$route.params.promotionId) {
-      this.$store.dispatch("students/getStudentsByPromotion", this.$route.params.promotionId);
-    } else {
-       this.$store.dispatch("students/getStudents");
-    }
+  created() {
+    this.$store.dispatch("promotions/getPromotions");
   },
   computed: {
     ...mapState(["modelEdit"]),
-    ...mapState("students", ["students"])
+    ...mapState("promotions", ["promotions"])
   },
   methods: {
     onRowSelected(items) {
       console.log(items[0].id);
       this.$store
-        .dispatch("modules/getModulsByStudent", items[0].id)
+        .dispatch("students/getStudentsByPromotion", items[0].id)
         .then(res => {
-          this.$router.push("/modulos/" + items[0].id); //Esperar que de carguen los modulos, para que tenga la data para crear los graficos al llegar a esa ruta
+          this.$router.push("/students/" + items[0].id); //Esperar que de carguen los modulos, para que tenga la data para crear los graficos al llegar a esa ruta
         });
     },
     editar(model) {
@@ -154,28 +132,12 @@ export default {
     color(total, completados) {
       let $color;
       let value = (completados * 100) / total;
-
-      /*    if(value == 100){
-         $color = "success";
-      } */
-
-      if (value <= 25) {
-        $color = "danger";
-      } else if (value > 25 && value <= 50) {
-        $color = "warning";
-      } else if (value > 50 && value <= 75) {
-        $color = "info";
-      } else if (value > 75 && value <= 100) {
-        if (total == 5) {
-          $color = "success";
-        }
-        $color = "primary";
-      }
+      
+      $color = "primary";
       return $color;
     },
     handleOk(bvModalEvt) {
       this.nameState = null;
-      this.emailState = null;
       bvModalEvt.preventDefault();
       // Trigger submit handler
       this.handleSubmit();
@@ -187,7 +149,7 @@ export default {
       }
 
       this.$store
-        .dispatch("students/updateStudent", this.modelEdit)
+        .dispatch("promotions/updatePromotion", this.modelEdit)
         .then(res => {})
         .catch(e => {
           console.log(e.response);
@@ -201,16 +163,12 @@ export default {
       const valid = this.$refs.form.checkValidity();
 
       this.nameState = this.modelEdit.name == "" ? valid : true;
-      this.emailState = this.modelEdit.email == "" ? valid : true;
-
       console.log(this.modelEdit);
       return valid;
     },
     resetModal() {
       this.name = "";
       this.nameState = null;
-      this.email = "";
-      this.emailState = null;
     }
   }
 };

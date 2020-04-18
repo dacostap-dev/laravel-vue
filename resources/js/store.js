@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router';
 
+import promotions from './modules/promotions'
 import students from './modules/students'
 import modules from './modules/modules'
 
@@ -60,6 +61,7 @@ export default new Vuex.Store({
 
   },
   modules: {
+    promotions,
     students,
     modules
   }

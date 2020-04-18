@@ -29,6 +29,15 @@ export default {
                 console.log(e.response)
             }
         },
+        async getStudentsByPromotion(context, promotion) {
+            try {
+              const res = await axios.get("/promotions/" + promotion + "/students")
+              context.commit('StudentsList', res.data)
+            }
+            catch (e) {
+              console.log(e.response)
+            }
+          },
         async updateStudent(context, params) {
             console.log(params)
             try {

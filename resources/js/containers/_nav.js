@@ -18,8 +18,14 @@ export default [
       },
       {
         _name: 'CSidebarNavItem',
-        name: 'Notas',
-        to: '/notas',
+        name: 'Promociones',
+        to: '/promotions',
+        icon: 'cil-drop'
+      },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Alumnos',
+        to: '/students',
         icon: 'cil-drop'
       },
       {

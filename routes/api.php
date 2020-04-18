@@ -20,6 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('notas', 'Note\NoteController')->except(['edit', 'create']);
 
+//Promotions
+Route::resource('promotions', 'Promotion\PromotionController')->except(['edit', 'create']);
+Route::resource('promotions.students', 'Promotion\PromotionStudentController')->only(['index']);
+
 //Students
 Route::resource('students', 'Student\StudentController')->except(['edit', 'create']);
 Route::resource('students.moduls', 'Student\StudentModulController')->only(['index', 'store']);
