@@ -33,7 +33,10 @@
                   :variant="color(row.item.count_moduls, row.item.moduls_complete)"
                   animated
                 >
-                  <b-progress-bar :value="row.item.porcentaje" :label="`${row.item.porcentaje}%`"></b-progress-bar>
+                  <b-progress-bar 
+                  :value="row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0" 
+                  :label="(row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0).toString()">
+                  </b-progress-bar>
                 </b-progress>
               </template>
               <template v-slot:cell(edit)="row">
@@ -155,21 +158,16 @@ export default {
       let $color;
       let value = (completados * 100) / total;
 
-      /*    if(value == 100){
-         $color = "success";
-      } */
-
       if (value <= 25) {
         $color = "danger";
       } else if (value > 25 && value <= 50) {
         $color = "warning";
       } else if (value > 50 && value <= 75) {
         $color = "info";
-      } else if (value > 75 && value <= 100) {
-        if (total == 5) {
-          $color = "success";
-        }
+      } else if (value > 75 && value < 100) {
         $color = "primary";
+      }else{
+        $color = "success"
       }
       return $color;
     },

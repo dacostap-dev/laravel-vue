@@ -13,8 +13,6 @@ class Student extends Model
     protected $appends = [
         'count_moduls',
         'moduls_complete',
-        'porcentaje',
-        'promotion_name'
     ];
 
     public function moduls(){
@@ -32,16 +30,10 @@ class Student extends Model
 
     public function getModulsCompleteAttribute()
     {
-        return $this->moduls()->where('name', 'Modulo 1')->get()->count();
-    }
-
-    public function getPorcentajeAttribute()
-    {
-        return $this->count_moduls != 0 ? $this->moduls_complete * 100 / $this->count_moduls : 0 ;
-    }
-
-    public function getPromotionNameAttribute()
-    {
-        return $this->promotion ? $this->promotion->name : ''; //checkear esto
+        return $this->moduls()->where(function ($query) {
+            $query->whereNotNull('informe')
+            ->WhereNotNull('solicitud')
+            ->WhereNotNull('memorandum');
+        })->count();
     }
 }
