@@ -68,7 +68,7 @@
                 >
                   <b-progress-bar
                     :value="row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0"
-                    :label="(row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0).toString()">
+                    :label="(row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0).toString()+'%'">
                   </b-progress-bar>
                 </b-progress>
               </template>
@@ -160,12 +160,7 @@ export default {
     };
   },
   created() {
-    //podría ser mountend
-    if (this.$route.params.promotionId) {
-      this.$store.dispatch("students/getStudentsByPromotion", this.$route.params.promotionId);
-    } else {
-      this.$store.dispatch("students/getStudents");
-    }
+    this.getStudents(); //Evalua si viene de una promocion o si son todos
   },
   computed: {
     ...mapState(["modelEdit"]),
@@ -190,6 +185,13 @@ export default {
     }
   },
   methods: {
+    getStudents(){
+      if (this.$route.params.promotionId) {
+        this.$store.dispatch("students/getStudentsByPromotion", this.$route.params.promotionId);
+      } else {
+        this.$store.dispatch("students/getStudents");
+      }
+    },
     onRowSelected(items) {
       console.log(items[0].id);
       this.$store
@@ -266,10 +268,10 @@ export default {
   },
   watch: {
     currentPage(newVal, OldVal) {
-      this.$store.dispatch("students/getStudents");
+       this.getStudents();
     },
     perPage(newVal, OldVal) {
-      this.$store.dispatch("students/getStudents");
+      this.getStudents();
     }
   }
 };
