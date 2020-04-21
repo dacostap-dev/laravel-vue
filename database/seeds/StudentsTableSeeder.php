@@ -15,7 +15,7 @@ class StudentsTableSeeder extends Seeder
     {
         $promocion = Promotion::select('id')->get();
         
-        for($i=0; $i<8; $i++){
+        for($i=0; $i<200; $i++){
             factory(Student::class)->create([
                 'promotion_id' => $promocion->random()->id,
             ]);
