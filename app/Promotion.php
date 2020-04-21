@@ -16,7 +16,6 @@ class Promotion extends Model
     protected $appends = [
         'total_alumnos',
         'alumnos_aprobados',
-        'porcentaje'
     ];
 
     public function students(){
@@ -31,18 +30,12 @@ class Promotion extends Model
       
        return $this->students()->get()->filter(function ($student, $key) {
             return $student->moduls()->where(function ($query) {
-                $query->whereNull('informe')
-                ->orWhereNull('solicitud')
-                ->orWhereNull('memorandum');
-            })->count() == 0;
+                $query->whereNotNull('informe')
+                ->WhereNotNull('solicitud')
+                ->WhereNotNull('memorandum');
+            })->count() == Modul::TotalMaximo;
             //return $student->moduls()->whereNotNull('informe')->count() == Modul::TotalMaximo;
         })->count();
         
     }
-
-    public function getPorcentajeAttribute()
-    {
-        return $this->total_alumnos != 0 ? $this->alumnos_aprobados * 100 / $this->total_alumnos : 0 ;
-    }
-
 }

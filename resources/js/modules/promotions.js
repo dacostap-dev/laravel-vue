@@ -1,7 +1,10 @@
 export default {
     namespaced: true,
     state: {
-        promotions: []
+        promotions: [],
+        currentPage: 1,
+        perPage: 10,
+        totalItems: 0
     },
     mutations: {
         PromotionsList(state, promotions){
@@ -11,13 +14,22 @@ export default {
             const index = state.promotions.findIndex(n => n.id == promotion.id);
             state.promotions[index].name = promotion.name;
         },
+        SetCurrentPage(state, currentPage) {
+            state.currentPage = currentPage
+        },
+        SetPerPage(state, perPage) {
+            state.perPage = perPage
+        },
+        SetTotalItems(state, totalItems) {
+            state.totalItems = totalItems
+        },
     },
     actions: {
         async getPromotions(context) {
             try {
-                const res = await axios.get("/promotions")
-                context.commit('PromotionsList', res.data)
-                console.log(res.data)
+                const res = await axios.get("/promotions?page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
+                context.commit('PromotionsList', res.data.data)
+                context.commit('SetTotalItems', res.data.total)
             }
             catch (e) {
                 console.log(e.response)

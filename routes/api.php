@@ -13,10 +13,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-/* 
-DB::listen(function($e){ //Para ver las consultas que se ejecuttan
+
+/* DB::listen(function($e){ //Para ver las consultas que se ejecuttan
     dump($e->sql);
-}); */
+});  */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Promotion;
 
 use App\Promotion;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class PromotionController extends Controller
+class PromotionController extends ApiController
 {
     public function index(){
         $promotions = Promotion::all();
-        return $promotions;
+        return $this->showAll($promotions);
     }
 
     public function show(Promotion $promotion)

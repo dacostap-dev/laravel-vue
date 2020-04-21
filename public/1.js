@@ -87,10 +87,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      pageOptions: [5, 10, 15],
       cabeceras: [{
         key: "name",
         label: "Nombre",
@@ -122,7 +155,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.$store.dispatch("promotions/getPromotions");
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["modelEdit"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])("promotions", ["promotions"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(["modelEdit"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])("promotions", ["promotions", "totalItems", "perPage"]), {
+    currentPage: {
+      get: function get() {
+        // console.log(this.$store.state.students.currentPage)
+        return this.$store.state.promotions.currentPage;
+      },
+      set: function set(value) {
+        this.$store.commit("promotions/SetCurrentPage", value);
+      }
+    },
+    perPage: {
+      get: function get() {
+        // console.log(this.$store.state.students.currentPage)
+        return this.$store.state.promotions.perPage;
+      },
+      set: function set(value) {
+        this.$store.commit("promotions/SetPerPage", value);
+      }
+    }
+  }),
   methods: {
     onRowSelected: function onRowSelected(items) {
       var _this = this;
@@ -179,6 +231,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.name = "";
       this.nameState = null;
     }
+  },
+  watch: {
+    currentPage: function currentPage(newVal, OldVal) {
+      this.$store.dispatch("promotions/getPromotions");
+    },
+    perPage: function perPage(newVal, OldVal) {
+      this.$store.dispatch("promotions/getPromotions");
+    }
   }
 });
 
@@ -217,6 +277,73 @@ var render = function() {
                     "b-col",
                     { attrs: { cols: "12" } },
                     [
+                      _c(
+                        "b-row",
+                        [
+                          _c(
+                            "b-col",
+                            { staticClass: "my-1", attrs: { md: "4" } },
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  staticClass: "mb-0",
+                                  attrs: {
+                                    label: "Por página",
+                                    "label-cols-md": "3",
+                                    "label-align-sm": "right",
+                                    "label-size": "sm",
+                                    "label-for": "perPageSelect"
+                                  }
+                                },
+                                [
+                                  _c("b-form-select", {
+                                    attrs: {
+                                      id: "perPageSelect",
+                                      size: "sm",
+                                      options: _vm.pageOptions
+                                    },
+                                    model: {
+                                      value: _vm.perPage,
+                                      callback: function($$v) {
+                                        _vm.perPage = $$v
+                                      },
+                                      expression: "perPage"
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-col",
+                            { attrs: { md: "8" } },
+                            [
+                              _c("b-pagination", {
+                                attrs: {
+                                  "total-rows": _vm.totalItems,
+                                  "per-page": _vm.perPage,
+                                  "aria-controls": "students-list",
+                                  align: "right"
+                                },
+                                model: {
+                                  value: _vm.currentPage,
+                                  callback: function($$v) {
+                                    _vm.currentPage = $$v
+                                  },
+                                  expression: "currentPage"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c("b-table", {
                         attrs: {
                           outlined: "",
@@ -283,8 +410,19 @@ var render = function() {
                                   [
                                     _c("b-progress-bar", {
                                       attrs: {
-                                        value: row.item.porcentaje,
-                                        label: row.item.porcentaje + "%"
+                                        value:
+                                          row.item.total_alumnos != 0
+                                            ? (row.item.alumnos_aprobados *
+                                                100) /
+                                              row.item.total_alumnos
+                                            : 0,
+                                        label:
+                                          (row.item.total_alumnos != 0
+                                            ? (row.item.alumnos_aprobados *
+                                                100) /
+                                              row.item.total_alumnos
+                                            : 0
+                                          ).toString() + "%"
                                       }
                                     })
                                   ],

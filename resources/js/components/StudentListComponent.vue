@@ -36,6 +36,8 @@
 
             <b-table
               id="students-list"
+              show-empty
+              empty-text = 'No tiene Alumnos'
               outlined
               responsive
               stacked="md"
@@ -209,19 +211,20 @@ export default {
       console.log(model);
       this.$store.dispatch("students/deleteStudent", model);
     },
-    color(total, completados) {
+    color(cantidadModulos, completados) {
       let $color;
-      let value = (completados * 100) / total;
-
+      let value = (completados * 100) / cantidadModulos;
       if (value <= 25) {
         $color = "danger";
       } else if (value > 25 && value <= 50) {
         $color = "warning";
       } else if (value > 50 && value <= 75) {
         $color = "info";
-      } else if (value > 75 && value < 100) {
+      } else if (value > 75 && value <= 100) {
         $color = "primary";
-      } else {
+      } 
+      
+      if(value === 100 && cantidadModulos == 5){
         $color = "success";
       }
       return $color;
