@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Student;
 
 use App\Student;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class StudentController extends Controller
+class StudentController extends ApiController
 {
     public function index(){
         $students = Student::all();
-        return $students;
+        return $this->showAll($students);
     }
 
     public function show(Student $student)
