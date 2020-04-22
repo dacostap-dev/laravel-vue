@@ -4,40 +4,11 @@
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
-            <b-row>
-              <b-col md="4" class="my-1">
-                <b-form-group
-                  label="Por página"
-                  label-cols-md="3"
-                  label-align-sm="right"
-                  label-size="sm"
-                  label-for="perPageSelect"
-                  class="mb-0"
-                >
-                  <b-form-select
-                    v-model="perPage"
-                    id="perPageSelect"
-                    size="sm"
-                    :options="pageOptions"
-                  ></b-form-select>
-                </b-form-group>
-              </b-col>
-
-              <b-col md="8">
-                <b-pagination
-                  v-model="currentPage"
-                  :total-rows="totalItems"
-                  :per-page="perPage"
-                  aria-controls="students-list"
-                  align="right"
-                ></b-pagination>
-              </b-col>
-            </b-row>
-
+            <PaginateComponent modul="students" />
             <b-table
               id="students-list"
               show-empty
-              empty-text = 'No tiene Alumnos'
+              empty-text= 'No tiene Alumnos'
               outlined
               responsive
               stacked="md"
@@ -48,8 +19,6 @@
               selectable
               select-mode="single"
               @row-selected="onRowSelected"
-              :current-page="currentPage"
-              :per-page="0"
             >
               <template v-slot:cell(avatar)="row">
                 <b-avatar variant="ligth" :src="`img/avatars/${row.item.image}`" class="ml-3"></b-avatar>
@@ -122,7 +91,6 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      pageOptions: [5, 10, 15],
       cabeceras: [
         {
           key: "avatar",
@@ -166,25 +134,7 @@ export default {
   },
   computed: {
     ...mapState(["modelEdit"]),
-    ...mapState("students", ["students", "totalItems", "perPage"]),
-    currentPage: {
-      get() {
-        // console.log(this.$store.state.students.currentPage)
-        return this.$store.state.students.currentPage;
-      },
-      set(value) {
-        this.$store.commit("students/SetCurrentPage", value);
-      }
-    },
-    perPage: {
-      get() {
-        // console.log(this.$store.state.students.currentPage)
-        return this.$store.state.students.perPage;
-      },
-      set(value) {
-        this.$store.commit("students/SetPerPage", value);
-      }
-    }
+    ...mapState("students", ["students"]),
   },
   methods: {
     getStudents(){
@@ -269,13 +219,5 @@ export default {
       this.emailState = null;
     }
   },
-  watch: {
-    currentPage(newVal, OldVal) {
-       this.getStudents();
-    },
-    perPage(newVal, OldVal) {
-      this.getStudents();
-    }
-  }
 };
 </script>

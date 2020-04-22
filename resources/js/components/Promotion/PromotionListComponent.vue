@@ -4,35 +4,7 @@
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
-              <b-row>
-              <b-col md="4" class="my-1">
-                <b-form-group
-                  label="Por página"
-                  label-cols-md="3"
-                  label-align-sm="right"
-                  label-size="sm"
-                  label-for="perPageSelect"
-                  class="mb-0"
-                >
-                  <b-form-select
-                    v-model="perPage"
-                    id="perPageSelect"
-                    size="sm"
-                    :options="pageOptions"
-                  ></b-form-select>
-                </b-form-group>
-              </b-col>
-
-              <b-col md="8">
-                <b-pagination
-                  v-model="currentPage"
-                  :total-rows="totalItems"
-                  :per-page="perPage"
-                  aria-controls="students-list"
-                  align="right"
-                ></b-pagination>
-              </b-col>
-            </b-row>
+            <PaginateComponent modul="promotions" />
             <b-table
               outlined
               responsive
@@ -106,7 +78,6 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      pageOptions: [5, 10, 15],
       cabeceras: [
         { key: "name", label: "Nombre", thStyle: "width: 22rem" },
         {
@@ -142,25 +113,8 @@ export default {
   },
   computed: {
     ...mapState(["modelEdit"]),
-    ...mapState("promotions", ["promotions", "totalItems", "perPage"]),
-     currentPage: {
-      get() {
-        // console.log(this.$store.state.students.currentPage)
-        return this.$store.state.promotions.currentPage;
-      },
-      set(value) {
-        this.$store.commit("promotions/SetCurrentPage", value);
-      }
-    },
-    perPage: {
-      get() {
-        // console.log(this.$store.state.students.currentPage)
-        return this.$store.state.promotions.perPage;
-      },
-      set(value) {
-        this.$store.commit("promotions/SetPerPage", value);
-      }
-    }
+    ...mapState("promotions", ["promotions"]),
+
   },
   methods: {
     onRowSelected(items) {
@@ -222,13 +176,5 @@ export default {
       this.nameState = null;
     }
   },
-  watch: {
-    currentPage(newVal, OldVal) {
-      this.$store.dispatch("promotions/getPromotions");
-    },
-    perPage(newVal, OldVal) {
-      this.$store.dispatch("promotions/getPromotions");
-    }
-  }
 };
 </script>
