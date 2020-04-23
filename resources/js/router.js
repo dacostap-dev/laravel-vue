@@ -2,9 +2,18 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-
+/* 
 const TheContainer = () => import('./containers/TheContainer')
 const Dashboard = () => import('./views/Dashboard')
+
+const PromotionListComponent = () => import('./components/Promotion/PromotionListComponent')
+const StudentListComponent = () => import('./components/StudentListComponent')
+const ModulsListComponent = () => import('./components/Modul/ModulsListComponent') */
+
+import Dashboard from './views/Dashboard';
+import PromotionListComponent from './components/Promotion/PromotionListComponent';
+import StudentListComponent from './components/StudentListComponent';
+import ModulsListComponent from './components/Modul/ModulsListComponent';
 
 
 function configRoutes() {
@@ -17,31 +26,26 @@ function configRoutes() {
         {
             path: '/dashboard',
             name: 'Dashboard',
-            component: () => import('./views/Dashboard')
+            component: Dashboard,
         },
         {
             path: '/promotions',
             name: 'Promociones',
-            component: () => import('./components/Promotion/PromotionListComponent')
+            component: PromotionListComponent,
         },
         {
             path: '/students',
             name: 'Alumnos',
-            component: () => import('./components/StudentListComponent'),
+            component: StudentListComponent,
             children: [{
                 path: ':promotionId',
-                component: () => import('./components/Promotion/PromotionListComponent')
+                component: PromotionListComponent,
               }],
-        },
-        {
-            path: '/notas',
-            name: 'Notas',
-            component: () => import('./components/Modul/ModulsListComponent')
         },
         {
             path: '/modulos/:studentId',
             name: 'Modulos',
-            component: () => import('./components/Modul/ModulsListComponent')
+            component: ModulsListComponent,
         },
     ]
 }

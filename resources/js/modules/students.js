@@ -47,7 +47,7 @@ export default {
         },
         async getStudentsByPromotion(context, promotion) {
             try {
-              const res = await axios.get("/promotions/" + promotion + "/students?page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
+              const res = await axios.get("/promotions/" + promotion + "/students?name=" +context.state.search+ "&page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
               context.commit('StudentsList', res.data.data)
               context.commit('SetTotalItems', res.data.total)
             }
