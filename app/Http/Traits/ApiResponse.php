@@ -18,6 +18,7 @@ trait ApiResponse{
             return $this->successResponse(['data' => $collection], $code);
         }
 
+        $collection = $this->filterData($collection);
         $collection = $this->paginate($collection);
 
 
@@ -25,6 +26,19 @@ trait ApiResponse{
     }
 
 
+    protected function filterData(Collection $collection)
+	{
+		foreach (request()->query() as $query => $value) {
+
+            if($query == 'name' && $value != ''){
+                $collection = $collection->filter(function ($student) use ($value) {
+                    // replace stristr with your choice of matching function
+                    return false !== stristr($student->name, $value);
+                });
+            }
+		}
+		return $collection;
+	}
 
     protected function paginate(Collection $collection){
         $rules = [

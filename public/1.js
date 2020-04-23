@@ -87,6 +87,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -217,6 +226,10 @@ var render = function() {
                     "b-col",
                     { attrs: { cols: "12" } },
                     [
+                      _c("SearchComponent", {
+                        attrs: { module: "promotions" }
+                      }),
+                      _vm._v(" "),
                       _c("b-table", {
                         attrs: {
                           outlined: "",
@@ -283,8 +296,19 @@ var render = function() {
                                   [
                                     _c("b-progress-bar", {
                                       attrs: {
-                                        value: row.item.porcentaje,
-                                        label: row.item.porcentaje + "%"
+                                        value:
+                                          row.item.total_alumnos != 0
+                                            ? (row.item.alumnos_aprobados *
+                                                100) /
+                                              row.item.total_alumnos
+                                            : 0,
+                                        label:
+                                          (row.item.total_alumnos != 0
+                                            ? (row.item.alumnos_aprobados *
+                                                100) /
+                                              row.item.total_alumnos
+                                            : 0
+                                          ).toString() + "%"
                                       }
                                     })
                                   ],
@@ -339,6 +363,10 @@ var render = function() {
                             }
                           }
                         ])
+                      }),
+                      _vm._v(" "),
+                      _c("PaginateComponent", {
+                        attrs: { modul: "promotions" }
                       })
                     ],
                     1

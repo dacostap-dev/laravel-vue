@@ -39,6 +39,8 @@ Vue.use(window.VueCharts);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('MessageComponent', require('./components/MessageComponent.vue').default);
+Vue.component('PaginateComponent', require('./components/PaginateComponent.vue').default);
+Vue.component('SearchComponent', require('./components/SearchComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -4,38 +4,13 @@
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
-            <b-row>
-              <b-col md="4" class="my-1">
-                <b-form-group
-                  label="Por página"
-                  label-cols-md="3"
-                  label-align-sm="right"
-                  label-size="sm"
-                  label-for="perPageSelect"
-                  class="mb-0"
-                >
-                  <b-form-select
-                    v-model="perPage"
-                    id="perPageSelect"
-                    size="sm"
-                    :options="pageOptions"
-                  ></b-form-select>
-                </b-form-group>
-              </b-col>
 
-              <b-col md="8">
-                <b-pagination
-                  v-model="currentPage"
-                  :total-rows="totalItems"
-                  :per-page="perPage"
-                  aria-controls="students-list"
-                  align="right"
-                ></b-pagination>
-              </b-col>
-            </b-row>
-
+            <SearchComponent module="students"/>
+     
             <b-table
               id="students-list"
+              show-empty
+              empty-text="No tiene Alumnos"
               outlined
               responsive
               stacked="md"
@@ -46,8 +21,6 @@
               selectable
               select-mode="single"
               @row-selected="onRowSelected"
-              :current-page="currentPage"
-              :per-page="0"
             >
               <template v-slot:cell(avatar)="row">
                 <b-avatar variant="ligth" :src="`img/avatars/${row.item.image}`" class="ml-3"></b-avatar>
@@ -68,8 +41,8 @@
                 >
                   <b-progress-bar
                     :value="row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0"
-                    :label="(row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0).toString()">
-                  </b-progress-bar>
+                    :label="(row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0).toString()+'%'"
+                  ></b-progress-bar>
                 </b-progress>
               </template>
               <template v-slot:cell(edit)="row">
@@ -81,6 +54,9 @@
                 <b-button variant="outline-danger" @click="eliminar(row.item)">Eliminar</b-button>
               </template>
             </b-table>
+
+            <PaginateComponent modul="students" />
+            
           </b-col>
         </b-row>
       </b-card-body>
@@ -120,7 +96,6 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      pageOptions: [5, 10, 15],
       cabeceras: [
         {
           key: "avatar",
@@ -160,36 +135,23 @@ export default {
     };
   },
   created() {
-    //podría ser mountend
-    if (this.$route.params.promotionId) {
-      this.$store.dispatch("students/getStudentsByPromotion", this.$route.params.promotionId);
-    } else {
-      this.$store.dispatch("students/getStudents");
-    }
+    this.getStudents(); //Evalua si viene de una promocion o si son todos
   },
   computed: {
     ...mapState(["modelEdit"]),
-    ...mapState("students", ["students", "totalItems", "perPage"]),
-    currentPage: {
-      get() {
-        // console.log(this.$store.state.students.currentPage)
-        return this.$store.state.students.currentPage;
-      },
-      set(value) {
-        this.$store.commit("students/SetCurrentPage", value);
-      }
-    },
-    perPage: {
-      get() {
-        // console.log(this.$store.state.students.currentPage)
-        return this.$store.state.students.perPage;
-      },
-      set(value) {
-        this.$store.commit("students/SetPerPage", value);
-      }
-    }
+    ...mapState("students", ["students"]),
   },
   methods: {
+    getStudents() {
+      if (this.$route.params.promotionId) {
+        this.$store.dispatch(
+          "students/getStudentsByPromotion",
+          this.$route.params.promotionId
+        );
+      } else {
+        this.$store.dispatch("students/getStudents");
+      }
+    },
     onRowSelected(items) {
       console.log(items[0].id);
       this.$store
@@ -207,19 +169,20 @@ export default {
       console.log(model);
       this.$store.dispatch("students/deleteStudent", model);
     },
-    color(total, completados) {
+    color(cantidadModulos, completados) {
       let $color;
-      let value = (completados * 100) / total;
-
+      let value = (completados * 100) / cantidadModulos;
       if (value <= 25) {
         $color = "danger";
       } else if (value > 25 && value <= 50) {
         $color = "warning";
       } else if (value > 50 && value <= 75) {
         $color = "info";
-      } else if (value > 75 && value < 100) {
+      } else if (value > 75 && value <= 100) {
         $color = "primary";
-      } else {
+      }
+
+      if (value === 100 && cantidadModulos == 5) {
         $color = "success";
       }
       return $color;
@@ -264,13 +227,5 @@ export default {
       this.emailState = null;
     }
   },
-  watch: {
-    currentPage(newVal, OldVal) {
-      this.$store.dispatch("students/getStudents");
-    },
-    perPage(newVal, OldVal) {
-      this.$store.dispatch("students/getStudents");
-    }
-  }
 };
 </script>

@@ -2,6 +2,7 @@ export default {
     namespaced: true,
     state: {
         students: [],
+        search: '',
         currentPage: 1,
         perPage: 10,
         totalItems: 0
@@ -29,11 +30,14 @@ export default {
         SetTotalItems(state, totalItems) {
             state.totalItems = totalItems
         },
+        SetSearch(state, search) {
+            state.search = search
+        },
     },
     actions: {
         async getStudents(context) {
             try {
-                const res = await axios.get("/students?page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
+                const res = await axios.get("/students?name=" +context.state.search+ "&page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
                 context.commit('StudentsList', res.data.data)
                 context.commit('SetTotalItems', res.data.total)
             }
@@ -43,8 +47,9 @@ export default {
         },
         async getStudentsByPromotion(context, promotion) {
             try {
-              const res = await axios.get("/promotions/" + promotion + "/students")
-              context.commit('StudentsList', res.data)
+              const res = await axios.get("/promotions/" + promotion + "/students?page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
+              context.commit('StudentsList', res.data.data)
+              context.commit('SetTotalItems', res.data.total)
             }
             catch (e) {
               console.log(e.response)

@@ -16,7 +16,7 @@ class Student extends Model
     ];
 
     public function moduls(){
-        return $this->hasMany(Modul::class)->orderBy('name');;
+        return $this->hasMany(Modul::class)->orderBy('name');
     }
 
     public function promotion(){

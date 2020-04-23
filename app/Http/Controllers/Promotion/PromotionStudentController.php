@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Promotion;
 
 use App\Promotion;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class PromotionStudentController extends Controller
+class PromotionStudentController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,8 @@ class PromotionStudentController extends Controller
      */
     public function index(Promotion $promotion)
     {
-        return $promotion->students;
+        $students = $promotion->students;
+        return $this->showAll($students);
     }
 
     /**

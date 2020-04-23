@@ -4,6 +4,9 @@
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
+
+             <SearchComponent module="promotions"/>
+   
             <b-table
               outlined
               responsive
@@ -33,7 +36,10 @@
                   :variant="color(row.item.total_alumnos, row.item.alumnos_aprobados)"
                   animated
                 >
-                  <b-progress-bar :value="row.item.porcentaje" :label="`${row.item.porcentaje}%`"></b-progress-bar>
+                  <b-progress-bar 
+                  :value="row.item.total_alumnos != 0 ? row.item.alumnos_aprobados * 100 / row.item.total_alumnos : 0"
+                  :label="(row.item.total_alumnos != 0 ? row.item.alumnos_aprobados * 100 / row.item.total_alumnos : 0).toString()+'%'">
+                  </b-progress-bar>
                 </b-progress>
               </template>
               <template v-slot:cell(edit)="row">
@@ -45,6 +51,9 @@
                 <b-button variant="outline-danger" @click="eliminar(row.item)">Eliminar</b-button>
               </template>
             </b-table>
+
+           <PaginateComponent modul="promotions" />
+
           </b-col>
         </b-row>
       </b-card-body>
@@ -109,7 +118,8 @@ export default {
   },
   computed: {
     ...mapState(["modelEdit"]),
-    ...mapState("promotions", ["promotions"])
+    ...mapState("promotions", ["promotions"]),
+
   },
   methods: {
     onRowSelected(items) {
@@ -170,6 +180,6 @@ export default {
       this.name = "";
       this.nameState = null;
     }
-  }
+  },
 };
 </script>
