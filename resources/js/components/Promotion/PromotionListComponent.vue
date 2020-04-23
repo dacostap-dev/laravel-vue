@@ -4,7 +4,9 @@
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
-            <PaginateComponent modul="promotions" />
+
+             <SearchComponent module="promotions"/>
+   
             <b-table
               outlined
               responsive
@@ -49,6 +51,9 @@
                 <b-button variant="outline-danger" @click="eliminar(row.item)">Eliminar</b-button>
               </template>
             </b-table>
+
+           <PaginateComponent modul="promotions" />
+
           </b-col>
         </b-row>
       </b-card-body>

@@ -2,6 +2,7 @@ export default {
     namespaced: true,
     state: {
         promotions: [],
+        search: '',
         currentPage: 1,
         perPage: 10,
         totalItems: 0
@@ -23,11 +24,14 @@ export default {
         SetTotalItems(state, totalItems) {
             state.totalItems = totalItems
         },
+        SetSearch(state, search) {
+            state.search = search
+        },
     },
     actions: {
         async getPromotions(context) {
             try {
-                const res = await axios.get("/promotions?page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
+                const res = await axios.get("/promotions?name=" +context.state.search+ "&page="+ context.state.currentPage+ "&per_page="+context.state.perPage)
                 context.commit('PromotionsList', res.data.data)
                 context.commit('SetTotalItems', res.data.total)
             }

@@ -41,8 +41,11 @@ export default {
   },
   watch: {
     search(newVal, OldVal) {
-      console.log("holi");
-      this.getStudents();
+     if (this.module == "students") {
+        this.getStudents();
+      } else {
+        this.$store.dispatch(this.module + "/getPromotions");
+      }
     }
   }
 };
