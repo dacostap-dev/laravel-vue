@@ -31,9 +31,9 @@ trait ApiResponse{
 		foreach (request()->query() as $query => $value) {
 
             if($query == 'name' && $value != ''){
-                $collection = $collection->filter(function ($student) use ($value) {
+                $collection = $collection->filter(function ($item) use ($value) {
                     // replace stristr with your choice of matching function
-                    return false !== stristr($student->name, $value);
+                    return false !== stristr($item->name, $value);
                 });
             }
 		}
