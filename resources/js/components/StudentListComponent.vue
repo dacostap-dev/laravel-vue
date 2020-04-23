@@ -4,11 +4,13 @@
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
-            <PaginateComponent modul="students" />
+
+            <SearchComponent module="students"/>
+     
             <b-table
               id="students-list"
               show-empty
-              empty-text= 'No tiene Alumnos'
+              empty-text="No tiene Alumnos"
               outlined
               responsive
               stacked="md"
@@ -39,8 +41,8 @@
                 >
                   <b-progress-bar
                     :value="row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0"
-                    :label="(row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0).toString()+'%'">
-                  </b-progress-bar>
+                    :label="(row.item.count_moduls != 0 ? row.item.moduls_complete * 100 / row.item.count_moduls : 0).toString()+'%'"
+                  ></b-progress-bar>
                 </b-progress>
               </template>
               <template v-slot:cell(edit)="row">
@@ -52,6 +54,9 @@
                 <b-button variant="outline-danger" @click="eliminar(row.item)">Eliminar</b-button>
               </template>
             </b-table>
+
+            <PaginateComponent modul="students" />
+            
           </b-col>
         </b-row>
       </b-card-body>
@@ -137,9 +142,12 @@ export default {
     ...mapState("students", ["students"]),
   },
   methods: {
-    getStudents(){
+    getStudents() {
       if (this.$route.params.promotionId) {
-        this.$store.dispatch("students/getStudentsByPromotion", this.$route.params.promotionId);
+        this.$store.dispatch(
+          "students/getStudentsByPromotion",
+          this.$route.params.promotionId
+        );
       } else {
         this.$store.dispatch("students/getStudents");
       }
@@ -172,9 +180,9 @@ export default {
         $color = "info";
       } else if (value > 75 && value <= 100) {
         $color = "primary";
-      } 
-      
-      if(value === 100 && cantidadModulos == 5){
+      }
+
+      if (value === 100 && cantidadModulos == 5) {
         $color = "success";
       }
       return $color;

@@ -70,7 +70,7 @@ export default {
     perPage: {
       get() {
         // console.log(this.$store.state.students.currentPage)
-       return this.$store.state[this.modul].perPage;
+        return this.$store.state[this.modul].perPage;
       },
       set(value) {
         this.$store.commit(this.modul + "/SetPerPage", value);
@@ -79,7 +79,7 @@ export default {
   },
   watch: {
     currentPage(newVal, OldVal) {
-        console.log(this.modul)
+      console.log(this.modul);
       if (this.modul == "students") {
         this.getStudents();
       } else {
