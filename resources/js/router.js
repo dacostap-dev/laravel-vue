@@ -29,18 +29,19 @@ function configRoutes() {
             component: Dashboard,
         },
         {
-            path: '/promotions',
+            path: '/promociones',
             name: 'Promociones',
             component: PromotionListComponent,
         },
         {
-            path: '/students',
+            path: '/promociones/:promotionId',
+            name: 'promotion',
+            component: StudentListComponent,
+        },
+        {
+            path: '/alumnos',
             name: 'Alumnos',
             component: StudentListComponent,
-            children: [{
-                path: ':promotionId',
-                component: PromotionListComponent,
-              }],
         },
 /*         {
             path: '/modulos',

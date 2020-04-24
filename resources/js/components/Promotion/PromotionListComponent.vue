@@ -127,7 +127,7 @@ export default {
       this.$store
         .dispatch("students/getStudentsByPromotion", items[0].id)
         .then(res => {
-          this.$router.push("/students/" + items[0].id); //Esperar que de carguen los modulos, para que tenga la data para crear los graficos al llegar a esa ruta
+          this.$router.push("/promociones/" + items[0].id); //Esperar que de carguen los modulos, para que tenga la data para crear los graficos al llegar a esa ruta
         });
     },
     editar(model) {

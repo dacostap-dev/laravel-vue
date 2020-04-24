@@ -19,13 +19,13 @@ export default [
       {
         _name: 'CSidebarNavItem',
         name: 'Promociones',
-        to: '/promotions',
+        to: '/promociones',
         icon: 'cil-drop'
       },
       {
         _name: 'CSidebarNavItem',
         name: 'Alumnos',
-        to: '/students',
+        to: '/alumnos',
         icon: 'cil-drop'
       },
       {
