@@ -42,6 +42,11 @@ function configRoutes() {
                 component: PromotionListComponent,
               }],
         },
+/*         {
+            path: '/modulos',
+            name: 'Modulos',
+            component: StudentListComponent,
+        }, */
         {
             path: '/modulos/:studentId',
             name: 'Modulos',
