@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use App\Promotion;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,12 @@ class PromotionsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Promotion::class, 5)->create();
+        $users = User::select('id')->get();
+        for($i=0; $i<10; $i++){
+            factory(Promotion::class)->create([
+                'user_id' => $users->random()->id
+            ]);
+        }
+     
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Promotion;
 
 use App\Promotion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ApiController;
 
 class PromotionController extends ApiController
