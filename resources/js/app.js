@@ -40,6 +40,12 @@ Vue.component('MessageComponent', require('./components/MessageComponent.vue').d
 Vue.component('PaginateComponent', require('./components/PaginateComponent.vue').default);
 Vue.component('SearchComponent', require('./components/SearchComponent.vue').default);
 
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

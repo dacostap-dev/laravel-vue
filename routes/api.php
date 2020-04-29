@@ -22,6 +22,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'api'], function () { //se usan prefijos para que no coincia con las rutas web
+    Route::post('login', 'AuthApi\AuthController@login')->name('login');
+    Route::post('register', 'AuthApi\AuthController@register')->name('register');
+    Route::middleware('auth:api')->post('logout', 'AuthApi\AuthController@logout')->name('logout');
+});
+
 Route::resource('notas', 'Note\NoteController')->except(['edit', 'create']);
 
 //Promotions
@@ -34,3 +40,6 @@ Route::resource('students.moduls', 'Student\StudentModulController')->only(['ind
 
 //Moduls
 Route::resource('moduls', 'Modul\ModulController')->except(['edit', 'create']);
+
+//Passport
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');

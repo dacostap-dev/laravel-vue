@@ -40,13 +40,13 @@ export default [
       },
       {
         _name: 'CSidebarNavDropdown',
-        name: 'Base',
-        route: '/base',
+        name: 'Tokens',
+        route: '/tokens',
         icon: 'cil-puzzle',
         items: [
           {
-            name: 'Breadcrumbs',
-            to: '/test'
+            name: 'Personal Token',
+            to: '/personaltoken'
           },
         ]
       },
@@ -68,8 +68,8 @@ export default [
       },
       {
         _name: 'CSidebarNavItem',
-        name: 'Widgets',
-        to: '/widgets',
+        name: 'Login',
+        to: '/login',
         icon: 'cil-calculator',
         badge: {
           color: 'primary',

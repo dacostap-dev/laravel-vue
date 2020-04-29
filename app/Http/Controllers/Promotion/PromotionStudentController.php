@@ -13,6 +13,11 @@ class PromotionStudentController extends ApiController
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        // parent::__construct(); //Esto va en los que requiera si o si autenticacion, hereda de Apicontroller
+     }
+
     public function index(Promotion $promotion)
     {
         $students = $promotion->students;
