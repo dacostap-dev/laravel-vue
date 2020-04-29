@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\User;
 use App\Modul;
 use App\Student;
 use App\Promotion;
@@ -18,8 +19,12 @@ class Promotion extends Model
         'alumnos_aprobados',
     ];
 
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
     public function students(){
-        return $this->hasMany(Student::class)->orderBy('name');;
+        return $this->hasMany(Student::class)->orderBy('name');
     }
 
     public function getTotalAlumnosAttribute(){

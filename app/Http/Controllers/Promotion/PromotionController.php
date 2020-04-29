@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Promotion;
 
 use App\Promotion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ApiController;
 
 class PromotionController extends ApiController
 {
+    public function __construct(){
+        parent::__construct(); //Esto va en los que requiera si o si autenticacion, hereda de Apicontroller
+      // $this->middleware('client')->only('index');
+    }
+
     public function index(){
         $promotions = Promotion::all();
         return $this->showAll($promotions);

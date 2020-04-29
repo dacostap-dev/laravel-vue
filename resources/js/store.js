@@ -3,11 +3,13 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router';
 
+import auth from './modules/auth'
 import promotions from './modules/promotions'
 import students from './modules/students'
 import modules from './modules/modules'
 
 axios.defaults.baseURL = 'http://appviru.herokuapp.com';
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
 
 Vue.use(Vuex)
 
@@ -60,6 +62,7 @@ export default new Vuex.Store({
 
   },
   modules: {
+    auth,
     promotions,
     students,
     modules

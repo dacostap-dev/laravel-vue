@@ -15,6 +15,9 @@ import PromotionListComponent from './components/Promotion/PromotionListComponen
 import StudentListComponent from './components/StudentListComponent';
 import ModulsListComponent from './components/Modul/ModulsListComponent';
 
+import PersonalToken from './components/passport/PersonalAccessTokens.vue';
+import Login from './components/Auth/Login.vue';
+
 
 function configRoutes() {
     return [
@@ -29,23 +32,39 @@ function configRoutes() {
             component: Dashboard,
         },
         {
-            path: '/promotions',
+            path: '/promociones',
             name: 'Promociones',
             component: PromotionListComponent,
         },
         {
-            path: '/students',
+            path: '/promociones/:promotionId',
+            name: 'promotion',
+            component: StudentListComponent,
+        },
+        {
+            path: '/alumnos',
             name: 'Alumnos',
             component: StudentListComponent,
-            children: [{
-                path: ':promotionId',
-                component: PromotionListComponent,
-              }],
         },
+/*         {
+            path: '/modulos',
+            name: 'Modulos',
+            component: StudentListComponent,
+        }, */
         {
             path: '/modulos/:studentId',
             name: 'Modulos',
             component: ModulsListComponent,
+        },
+        {
+            path: '/personaltoken',
+            name: 'Personal',
+            component: PersonalToken,
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login,
         },
     ]
 }

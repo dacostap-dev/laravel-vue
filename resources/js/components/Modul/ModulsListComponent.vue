@@ -29,9 +29,7 @@
     <b-card header-tag="header">
       <template v-slot:header>
         <b-row align-h="around">
-          <b-col cols="6">
-            Lista de módulos
-          </b-col>
+          <b-col cols="6">Lista de módulos</b-col>
           <b-col cols="5">
             <div class="float-right">
               <b-button size="sm" variant="outline-primary" @click="storeModul()">
@@ -132,16 +130,21 @@ export default {
       this.$store.dispatch("modules/getModulsByStudent", this.$route.params.studentId);
     }
   },
+  destroyed() {
+   this.$store.commit('ModulSelected', null);
+  },
   computed: {
     ...mapState(["modulSelected"]),
-     ...mapState("modules", ["moduls"])
+    ...mapState("modules", ["moduls"])
   },
   methods: {
     updateModul() {
       this.btn = true;
-      this.$store.dispatch("modules/updateModul", this.modulSelected).then(res => {
-        this.btn = false;
-      });
+      this.$store
+        .dispatch("modules/updateModul", this.modulSelected)
+        .then(res => {
+          this.btn = false;
+        });
     },
     storeModul() {
       this.$refs["modul_store"].show();
