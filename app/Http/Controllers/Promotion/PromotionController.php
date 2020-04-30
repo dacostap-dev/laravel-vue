@@ -10,12 +10,12 @@ use App\Http\Controllers\ApiController;
 class PromotionController extends ApiController
 {
     public function __construct(){
-        parent::__construct(); //Esto va en los que requiera si o si autenticacion, hereda de Apicontroller
+        parent::__construct(); //Esto va en los que requiera si o si autenticacion, hereda de Apicontroller, podria estar en un group en api.php
       // $this->middleware('client')->only('index');
     }
 
     public function index(){
-        $promotions = Promotion::all();
+        $promotions = auth()->user()->promotions;
         return $this->showAll($promotions);
     }
 

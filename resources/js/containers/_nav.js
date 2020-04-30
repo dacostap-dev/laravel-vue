@@ -67,17 +67,6 @@ export default [
         ]
       },
       {
-        _name: 'CSidebarNavItem',
-        name: 'Login',
-        to: '/login',
-        icon: 'cil-calculator',
-        badge: {
-          color: 'primary',
-          text: 'NEW',
-          shape: 'pill'
-        }
-      },
-      {
         _name: 'CSidebarNavDivider',
         _class: 'm-2'
       },
