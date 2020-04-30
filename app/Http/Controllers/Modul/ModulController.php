@@ -4,15 +4,20 @@ namespace App\Http\Controllers\Modul;
 
 use App\Modul;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class ModulController extends Controller
+class ModulController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        parent::__construct(); //Esto va en los que requiera si o si autenticacion, hereda de Apicontroller, podria estar en un group en api.php
+     }
+
     public function index()
     {
         $moduls = Modul::all();
@@ -71,6 +76,10 @@ class ModulController extends Controller
      */
     public function update(Request $request, Modul $modul)
     {
+        if($modul->student->promotion->user->id != auth()->user()->id){
+            return response()->json(['data' => 'No autorizado'], 401);
+        };
+    
         if($request->has('name')){
             $modul->name = $request->name;
         }

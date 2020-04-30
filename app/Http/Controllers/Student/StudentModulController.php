@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Student;
 use App\Modul;
 use App\Student;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
 
-class StudentModulController extends Controller
+class StudentModulController extends ApiController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+       parent::__construct(); //Esto va en los que requiera si o si autenticacion, hereda de Apicontroller, podria estar en un group en api.php
+    }
+
     public function index(Student $student)
     {
        return $student->moduls;
