@@ -18,13 +18,28 @@ import BootstrapVue from 'bootstrap-vue' //Importing
 import CoreuiVue from '@coreui/vue'
 import { iconsSet as icons } from '../icons/icons.js'
 import { IconsPlugin } from 'bootstrap-vue'
+import VeeValidate, { Validator } from 'vee-validate';
+import es from 'vee-validate/dist/locale/es'
 
 import "chart.js";
 import "hchs-vue-charts";
 
+
+Vue.use(VeeValidate, {
+  // This is the default
+  inject: true,
+  // Important to name this something other than 'fields'
+  fieldsBagName: 'veeFields',
+  // This is not required but avoids possible naming conflicts
+  errorBagName: 'veeErrors'
+})
+
+Validator.localize("es", es); //En español, va despues de usar VeeValidate
+
 Vue.use(IconsPlugin)
 Vue.use(CoreuiVue) // Telling Vue to use this in whole application
 Vue.use(BootstrapVue)
+Vue.use(VeeValidate);
 Vue.use(window.VueCharts);
 
 /**
@@ -62,3 +77,31 @@ const app = new Vue({
     router,
     icons,
 });
+
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      // this route requires auth, check if logged in
+      // if not, redirect to login page.
+      if (!store.getters['auth/IsLoggedIn']) { //verifica si no está logeado
+        next({
+          name: 'login',
+        })
+      } else {
+        next()
+      }
+    } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (store.getters['auth/IsLoggedIn']) { //verifica si está logeado
+          next({
+            name: 'Promociones',
+          })
+        } else {
+          next()
+        }
+    }
+     else {
+      next() // make sure to always call next()!
+    }
+  })

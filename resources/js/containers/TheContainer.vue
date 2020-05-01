@@ -1,41 +1,50 @@
 <template>
   <div class="c-app">
-    <TheSidebar/>
+    <TheSidebar />
     <CWrapper>
-      <TheHeader/>
+      <TheHeader />
       <div class="c-body">
         <main class="c-main">
           <CContainer fluid>
-            <transition name="fade">
+            <transition :duration="200" 
+              name="router-animation"
+              enter-active-class="animated fadeIn"
+              leave-active-class="animated fadeOut"
+              mode="out-in"
+            >
               <router-view :key="$route.path"></router-view>
-            <!--   <dashboard/> -->
+              <!--   <dashboard/> -->
             </transition>
           </CContainer>
         </main>
-        <TheFooter/>
+        <TheFooter />
       </div>
     </CWrapper>
   </div>
 </template>
 
 <script>
-import TheSidebar from './TheSidebar'
-import TheHeader from './TheHeader'
-import TheFooter from './TheFooter'
+import TheSidebar from "./TheSidebar";
+import TheHeader from "./TheHeader";
+import TheFooter from "./TheFooter";
 
-import Dashboard from '../views/Dashboard'
+import Dashboard from "../views/Dashboard";
 
 export default {
-  name: 'TheContainer',
+  name: "TheContainer",
   components: {
     TheSidebar,
     TheHeader,
     TheFooter,
     Dashboard
   }
-}
+};
 </script>
 
+<style lang="css">
+  @import url("https://cdn.jsdelivr.net/npm/animate.css@3.5.1");
+
+</style>
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {

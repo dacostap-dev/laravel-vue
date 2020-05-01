@@ -75,8 +75,7 @@ export default {
   },
   methods: {
     logout(){
-      console.log('deslogeado');
-      this.$store.dispatch('logout')
+       this.$router.push({name: 'logout'});
     }
   },
 }

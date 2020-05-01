@@ -25,11 +25,11 @@ class AuthController extends Controller
         };
 
         if($response->clientError()){
-             return response()->json(['data' => 'Credenciales incorrectas']);
+             return response()->json(['data' => 'Credenciales incorrectas'], 401);
         }
 
         if($response->serverError()){
-            return response()->json(['data' => 'Fallo en el Servidor']);
+            return response()->json(['data' => 'Fallo en el Servidor'], 500);
        } 
         
     }

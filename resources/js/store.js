@@ -9,8 +9,7 @@ import students from './modules/students'
 import modules from './modules/modules'
 
 axios.defaults.baseURL = 'http://appviru.herokuapp.com';
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
-
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token'); //aqui y en auth/login porque sino no da :/
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -45,18 +44,14 @@ export default new Vuex.Store({
       state.message.text = message.text
       state.message.color = message.color
     },
+    CLEAR_DATA(state){
+      console.log('limpiandooo')
+      state.promotions.promotions = [];
+      state.students.students = [];
+    }
   },
   actions: {
-    async logout(context) {
-      try {
-        const res = await axios.post("/logout")
-        router.go('login')
-        console.log(res.data)
-      }
-      catch (e) {
-        console.log(e.response)
-      }
-    }
+
   },
   getters: {
 
