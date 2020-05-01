@@ -33,6 +33,7 @@
         "bootstrap-vue": "^2.9.0",
         "chart.js": "^2.9.3",
         "hchs-vue-charts": "^1.2.8",
+        "vee-validate": "<3.0.0",
         "vue-router": "^3.1.6",
         "vuex": "^3.1.3"
     }

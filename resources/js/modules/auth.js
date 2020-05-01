@@ -2,6 +2,8 @@ export default {
     namespaced: true,
     state: {
         token: localStorage.getItem('access_token') || null,
+        error: '',
+        server_errors: []
     },
     mutations: {
         SET_TOKEN(state, token) {
@@ -9,6 +11,12 @@ export default {
         },
         DESTROY_TOKEN(state) {
             state.token = null;
+        },
+        SET_ERROR(state, error) {
+            state.error = error;
+        },
+        SET_SERVER_ERRORS(state, server_errors) {
+            state.server_errors = server_errors;
         }
     },
     actions: {
@@ -17,7 +25,8 @@ export default {
                 const res = await axios.post("/api/register", params)
             }
             catch (e) {
-                throw e.response; //dispará exepcion para el catch del metodo
+                context.commit('SET_SERVER_ERRORS', Object.values(e.response.data.errors))
+                throw e.response.data.errors; //dispará exepcion para el catch del metodo
             }
         },
         async login(context, params) {
@@ -29,6 +38,7 @@ export default {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
             }
             catch (e) {
+                context.commit('SET_ERROR', e.response.data.data)
                 throw e.response; //dispará exepcion para el catch del metodo
             }
         },

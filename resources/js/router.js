@@ -75,6 +75,7 @@ function configRoutes() {
             path: '/login',
             name: 'login',
             component: Login,
+            props: true,
             meta: { requiresVisitor: true }
         },
         {
