@@ -8,7 +8,7 @@ import promotions from './modules/promotions'
 import students from './modules/students'
 import modules from './modules/modules'
 
-axios.defaults.baseURL = 'http://appviru.herokuapp.com';
+axios.defaults.baseURL = 'http://206.189.182.80';
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token'); //aqui y en auth/login porque sino no da :/
 Vue.use(Vuex)
 
