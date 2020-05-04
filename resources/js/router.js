@@ -29,7 +29,11 @@ function configRoutes() {
             name: 'Home',
             component: TheContainer,
             meta: { requiresAuth: true },
-            redirect:  {name: 'login'},
+            redirect:  to => {
+                if(window.location.href.indexOf("apiview") > -1){ //Para que no haga conficto con la web
+                    return  '/login';
+                }  
+            },
             children: [
                 {
                   path: 'dashboard',
@@ -84,7 +88,7 @@ function configRoutes() {
             component: Register,
         },
 
-        { path: '*', redirect: '/dashboard' }
+        { path: '*', redirect: '/' }
  
      
    

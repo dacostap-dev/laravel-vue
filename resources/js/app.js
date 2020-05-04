@@ -57,10 +57,19 @@ Vue.component('SearchComponent', require('./components/SearchComponent.vue').def
 
 
 Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue').default
+  'passport-clients',
+  require('./components/passport/Clients.vue').default
 );
 
+Vue.component(
+  'passport-authorized-clients',
+  require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+  'passport-personal-access-tokens',
+  require('./components/passport/PersonalAccessTokens.vue').default
+);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -81,13 +90,16 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       // this route requires auth, check if logged in
       // if not, redirect to login page.
-      if (!store.getters['auth/IsLoggedIn']) { //verifica si no está logeado
-        next({
-          name: 'login',
-        })
-      } else {
-        next()
-      }
+      if(window.location.href.indexOf("apiview") > -1){ //Para que no haga conficto con la web
+        if (!store.getters['auth/IsLoggedIn']) { //verifica si no está logeado
+          next({
+            name: 'login',
+          })
+        } else {
+          next()
+        }
+    }  
+   
     } else if (to.matched.some(record => record.meta.requiresVisitor)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
