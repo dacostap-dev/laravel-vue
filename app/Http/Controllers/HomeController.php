@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->only(['index']);
+        $this->middleware('auth')->except(['apiview']);
     }
 
     /**
@@ -24,6 +24,21 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function getTokens()
+    {
+        return view('tokens.personal-tokens');
+    }
+
+    public function getClients()
+    {
+        return view('tokens.personal-clients');
+    }
+
+    public function getAuthorizedClients()
+    {
+        return view('tokens.authorized-clients');
     }
 
     public function apiview()
