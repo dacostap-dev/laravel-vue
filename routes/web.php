@@ -27,3 +27,21 @@ Route::get('/home/authorized-clients', 'HomeController@getAuthorizedClients')->n
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/apiview', 'HomeController@apiview')->name('apiview');
+
+
+
+Route::group(['middleware' => 'auth:web'], function () { 
+  
+    //Currency
+    Route::get('currencies', 'Currency\CurrencyController@index');
+
+    //PaymentPlatform
+    Route::get('payment-platforms', 'PaymentPlatform\PaymentPlatformController@index');
+
+    //Payments
+    Route::get('/home/show-pay', 'HomeController@show_pay')->name('show-pay');
+    Route::post('payments/pay', 'PaymentController@pay')->name('pay');   
+    Route::get('payments/approval', 'PaymentController@approval')->name('approval');
+    Route::get('payments/cancelled', 'PaymentController@cancelled')->name('cancelled');
+});
+    

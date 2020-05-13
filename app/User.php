@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Promotion;
+use App\Transaction;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -42,5 +43,9 @@ class User extends Authenticatable
 
     public function promotions(){
         return $this->hasMany(Promotion::class)->orderBy('name');
+    }
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
     }
 }
