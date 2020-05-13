@@ -21,6 +21,7 @@ import Login from './components/Auth/Login.vue';
 import Logout from './components/Auth/Logout.vue';
 import Register from './components/Auth/Register.vue';
 
+import PaymentProcessor from './components/PaymentProcessor/PaymentProcessor.vue';
 
 function configRoutes() {
     return [
@@ -71,8 +72,7 @@ function configRoutes() {
                     path: '/logout',
                     name: 'logout',
                     component: Logout,
-                },
-              
+                },        
             ]
         },
         {

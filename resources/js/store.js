@@ -7,6 +7,7 @@ import auth from './modules/auth'
 import promotions from './modules/promotions'
 import students from './modules/students'
 import modules from './modules/modules'
+import payment from './modules/payment'
 
 axios.defaults.baseURL = 'http://viru.test';
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token'); //aqui y en auth/login porque sino no da :/
@@ -61,6 +62,7 @@ export default new Vuex.Store({
     auth,
     promotions,
     students,
-    modules
+    modules,
+    payment
   }
 })

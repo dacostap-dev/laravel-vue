@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\PayPal;
+
 return [
 
     /*
@@ -34,6 +36,13 @@ return [
         'login_endpoint' => env('PASSPORT_LOGIN_ENDPOINT'),
         'client_id' => env('PASSPORT_CLIENT_ID'),
         'client_secret' => env('PASSPORT_CLIENT_SECRET'),
+    ],
+
+    'paypal' => [
+        'base_uri' => env('PAYPAL_BASE_URI'),
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_CLIENT_SECRET'),
+        'class' => PayPal::class,
     ],
 
 ];

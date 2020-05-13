@@ -51,22 +51,6 @@ export default [
         ]
       },
       {
-        _name: 'CSidebarNavDropdown',
-        name: 'Icons',
-        route: '/icons',
-        icon: 'cil-star',
-        items: [
-          {
-            name: 'CoreUI Icons',
-            to: '/icons/coreui-icons',
-            badge: {
-              color: 'info',
-              text: 'NEW'
-            }
-          },
-        ]
-      },
-      {
         _name: 'CSidebarNavDivider',
         _class: 'm-2'
       },
