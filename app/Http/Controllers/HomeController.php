@@ -41,6 +41,11 @@ class HomeController extends Controller
         return view('tokens.authorized-clients');
     }
 
+    public function show_pay()
+    {
+        return view('payments.payment-processor');
+    }
+
     public function apiview()
     {
         return view('welcomeApi');

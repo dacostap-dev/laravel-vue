@@ -43,6 +43,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('authorized-clients') }}">Authorized Clients</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('show-pay') }}">Pagar</a>
+                            </li>
                         @endif
                     </ul>
 
