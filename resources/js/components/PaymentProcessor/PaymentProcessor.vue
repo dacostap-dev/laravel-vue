@@ -2,7 +2,7 @@
   <div>
     <b-card header="Procesar pago">
       <b-card-body>
-        <b-form class @submit.prevent="pagar()">
+        <b-form id="payment-form" @submit.prevent="pagar()">
           <b-row>
             <b-col cols="6">
               <b-form-group label-align="left" label="Ingresa el monto a pagar:">
@@ -39,21 +39,19 @@
                 <b-button-group>
                   <b-button
                     class="p-1 ml-2"
-                    v-for="(pago, idx) in platforms"
+                    v-for="(platform, idx) in platforms"
                     :key="idx"
                     variant="outline-primary"
-                    @click="select(pago.id)"
-                    v-b-toggle="`accordion-${pago.id}`"
+                    @click="select(platform)"
+                    v-b-toggle="`accordion-${platform.id}`"
                   >
-                    <b-img v-bind="mainProps" :src="`../${pago.image}`"></b-img>
+                    <b-img v-bind="mainProps" :src="`../${platform.image}`"></b-img>
                   </b-button>
                 </b-button-group>
               </b-form-group>
-              <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-                <h1>1</h1>
-              </b-collapse>
-              <b-collapse id="accordion-2" visible accordion="my-accordion" role="tabpanel">
-                <h1>2</h1>
+              <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel"></b-collapse>
+              <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+                <Stripe ref="stripe" />
               </b-collapse>
             </b-col>
           </b-row>
@@ -69,6 +67,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import Stripe from "./Stripe";
 export default {
   data() {
     return {
@@ -76,11 +75,14 @@ export default {
       btn: false,
       value: "",
       platform_select: "",
-      currency: "eur",
+      currency: "eur"
     };
   },
+  components: {
+    Stripe
+  },
   computed: {
-    ...mapState("payment", ["currencies", "platforms"])
+    ...mapState("payment", ["currencies", "platforms", "stripe_token"])
   },
   created() {
     this.$store.dispatch("payment/getCurrencies");
@@ -88,17 +90,38 @@ export default {
   },
   methods: {
     pagar() {
-      let pay = {
+      if (this.platform_select.name.toLowerCase() == "stripe") {
+        this.obtenerToken().then(() => {
+          this.StripePay();
+        });
+      } else {
+        this.PaypalPay();
+      }
+    },
+    async obtenerToken() {
+      const token = await this.$refs.stripe.getToken();
+    },
+    PaypalPay() {
+      var pay = {
         currency: this.currency,
-        platform: this.platform_select,
+        platform: this.platform_select.id,
         value: this.value
       };
-      console.log(pay);
+
       this.$store.dispatch("payment/pay", pay);
     },
-    select(id) {
-      this.platform_select = id;
-      console.log(id);
+    StripePay() {
+      var pay = {
+        currency: this.currency,
+        platform: this.platform_select.id,
+        value: this.value,
+        token: this.stripe_token
+      };
+      this.$store.dispatch("payment/pay", pay);
+    },
+    select(platform) {
+      this.platform_select = platform;
+      console.log(platform);
     }
   }
 };

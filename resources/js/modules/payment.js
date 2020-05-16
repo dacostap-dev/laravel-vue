@@ -3,6 +3,7 @@ export default{
     state: {
         currencies: [],
         platforms: [],
+        stripe_token: null
     },
     mutations: {
         SET_CURRENCIES(state, currencies){
@@ -10,6 +11,9 @@ export default{
         },
         SET_PLATFORMS(state, platforms){
             state.platforms = platforms
+        },
+        STRIPE_TOKEN(state, stripe_token){
+            state.stripe_token = stripe_token
         }
     },
     actions: {

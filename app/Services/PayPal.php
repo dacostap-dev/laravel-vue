@@ -65,15 +65,14 @@ class PayPal{
                 $transaction = Transaction::where('order_id', $approvalId)->first();
                 $transaction->status = 'COMPLETED';
                 $transaction->save();     
+
+                $paydetail = $payment->purchase_units[0]->payments->captures[0]->amount;
+                $name = $payment->payer->name->given_name;
+                $amount = $paydetail->value;
+                $currency = $paydetail->currency_code;
+    
+                return redirect()->route('home')->with('status', "Gracias {$name} por pagar {$amount} {$currency}");
             }
-
-            $name = $payment->payer->name->given_name;
-
-            $paydetail = $payment->purchase_units[0]->payments->captures[0]->amount;
-            $amount = $paydetail->value;
-            $currency = $paydetail->currency_code;
-
-            return redirect()->route('home')->with('status', "Gracias {$name} por pagar {$amount} {$currency}");;
 
         }
 
