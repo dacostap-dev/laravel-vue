@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\PayPal;
+use App\Services\Stripe;
 
 return [
 
@@ -38,11 +39,20 @@ return [
         'client_secret' => env('PASSPORT_CLIENT_SECRET'),
     ],
 
+//Pagos
     'paypal' => [
         'base_uri' => env('PAYPAL_BASE_URI'),
         'client_id' => env('PAYPAL_CLIENT_ID'),
         'client_secret' => env('PAYPAL_CLIENT_SECRET'),
         'class' => PayPal::class,
     ],
+
+    'stripe' => [
+        'base_uri' => env('STRIPE_BASE_URI'),
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'class' => Stripe::class,
+    ],
+
 
 ];
