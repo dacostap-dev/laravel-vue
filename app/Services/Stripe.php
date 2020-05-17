@@ -40,14 +40,6 @@ class Stripe{
         $intent = $this->createIntent($request->value, $request->currency, $request->token);
         session()->put('paymentIntentId', $intent->id); //Para usarios logeados en web
 
-
-
-   /*      Transaction::create([
-            'order_id' => $order->id,
-            'user_id' => auth()->user()->id,
-            'payment_platform_id' => '1'
-        ]);
- */
         return route('approval');
     }
 
@@ -58,11 +50,14 @@ class Stripe{
             $paymentIntentId = session()->get('paymentIntentId');
             $confirmation = $this->confirmPayment($paymentIntentId);
 
+            if($confirmation->status === "requires_action"){ //SCA
+                $client_secret = $confirmation->client_secret;
+
+                return view('payments.stripe.3d-secure')->with(['client_secret' => $client_secret]);
+            }
+
             if($confirmation->status == "succeeded"){
-           /*      $transaction = Transaction::where('order_id', $approvalId)->first();
-                $transaction->status = 'COMPLETED';
-                $transaction->save();     
- */
+       
                 $name = $confirmation->charges->data[0]->billing_details->name;
                 $amount = strtoupper($confirmation->currency);
                 $currency = $confirmation->amount / 100;

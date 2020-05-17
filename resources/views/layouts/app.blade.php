@@ -15,7 +15,6 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <script src="https://js.stripe.com/v3/"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -90,5 +89,6 @@
             @yield('content')
         </main> 
     </div>
+    @stack('scripts')
 </body>
 </html>

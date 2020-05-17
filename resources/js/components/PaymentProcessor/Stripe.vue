@@ -8,25 +8,23 @@
 </template>
 
 <script>
-let stripe = Stripe(`pk_test_FZHPqECijAHnyA6NEcpyGjmb00CtHUPe2Y`),
-  elements = stripe.elements(),
-  card = undefined;
-
 export default {
   data() {
-    return {};
+    return {
+      stripe: null,
+      elements: null,
+      card: undefined
+    };
   },
-
-  /*   created() {
-    let recaptchaScript = document.createElement("script");
-    recaptchaScript.setAttribute('src', 'https://js.stripe.com/v3/') 
-    document.head.appendChild(recaptchaScript);
-  }, */
+  created() {
+    (this.stripe = Stripe(`pk_test_FZHPqECijAHnyA6NEcpyGjmb00CtHUPe2Y`)),
+      (this.elements = this.stripe.elements());
+  },
   mounted() {
-    card = elements.create("card");
-    card.mount(this.$refs.card);
+    this.card = this.elements.create("card");
+    this.card.mount(this.$refs.card);
 
-    card.addEventListener("change", function(event) {
+    this.card.addEventListener("change", function(event) {
       var displayError = document.getElementById("card-errors");
       if (event.error) {
         displayError.textContent = event.error.message;
@@ -37,24 +35,16 @@ export default {
   },
   methods: {
     async getToken() {
-     await stripe.createPaymentMethod('card', card, {}).then( res => {
+      await this.stripe.createPaymentMethod("card", this.card, {}).then(res => {
+        // billing_details: { "name": "Dany","email": "dani@hotmail.com"}
         if (res.error) {
           console.log(res);
-          // Inform the user if there was an error.
-          /*    var errorElement = document.getElementById('card-errors');
-      errorElement.textContent = result.error.message; */
+          //var displayError = document.getElementById("card-errors");
+          //   displayError.textContent = event.error.message; */
         } else {
           this.$store.commit("payment/STRIPE_TOKEN", res.paymentMethod.id);
         }
       });
-
-      /*       const {paymentMethod, error} = stripe.createPaymentMethod('card', card, {
-        billing_details: {
-          "name": "Dany",
-          "email": "dani@hotmail.com"
-        }
-      })
-      } */
     }
   }
 };
