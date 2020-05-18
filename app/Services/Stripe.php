@@ -79,7 +79,7 @@ class Stripe{
                 'amount' => $value * 100,
                 'currency' => strtolower($currency),
                 'payment_method' => $paymentMethod,
-                'confirmation_method' => 'manual',
+                'confirmation_method' => 'manual'
             ],
         );
     }
@@ -87,7 +87,7 @@ class Stripe{
     public function confirmPayment($paymentIntentId){
         return $this->makeRequest(
             'post',
-            "/v1/payment_intents/{$paymentIntentId}/confirm", 
+            "/v1/payment_intents/{$paymentIntentId}/confirm" 
         );
     }
 
