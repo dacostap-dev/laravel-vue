@@ -80,7 +80,7 @@ class Stripe{
                 'currency' => strtolower($currency),
                 'payment_method' => $paymentMethod,
                 'confirmation_method' => 'manual'
-            ],
+            ]
         );
     }
 
