@@ -53,6 +53,12 @@ return [
         'secret' => env('STRIPE_SECRET'),
         'class' => Stripe::class,
     ],
+     
+//Tipodecambio
+    'currency_conversion' => [
+        'base_uri' => env('CURRENCY_CONVERSION_BASE_URI'),
+        'api_key' => env('CURRENCY_CONVERSION_API_KEY'),
+    ],
 
 
 ];
