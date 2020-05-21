@@ -2,6 +2,7 @@
 
 use App\Services\PayPal;
 use App\Services\Stripe;
+use App\Services\MercadoPago;
 
 return [
 
@@ -40,6 +41,14 @@ return [
     ],
 
 //Pagos
+    'mercadopago' => [
+        'base_uri' => env('MERCADOPAGO_BASE_URI'),
+        'key' => env('MERCADOPAGO_KEY'),
+        'secret' => env('MERCADOPAGO_SECRET'),
+        'class' => MercadoPago::class,
+        'base_currency' => 'pen',
+    ],
+
     'paypal' => [
         'base_uri' => env('PAYPAL_BASE_URI'),
         'client_id' => env('PAYPAL_CLIENT_ID'),
@@ -52,6 +61,12 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'class' => Stripe::class,
+    ],
+     
+//Tipodecambio
+    'currency_conversion' => [
+        'base_uri' => env('CURRENCY_CONVERSION_BASE_URI'),
+        'api_key' => env('CURRENCY_CONVERSION_API_KEY'),
     ],
 
 
