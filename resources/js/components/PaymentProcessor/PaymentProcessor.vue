@@ -9,7 +9,6 @@
                 <b-form-input
                   type="text"
                   required
-                  name="value"
                   v-model="value"
                   placeholder="use valores en decimales separados con '.'"
                 ></b-form-input>
@@ -53,6 +52,9 @@
               <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
                 <Stripe ref="stripe" />
               </b-collapse>
+              <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+                <MercadoPago ref="mercadopago" />
+              </b-collapse>
             </b-col>
           </b-row>
 
@@ -68,7 +70,9 @@
 <script>
 import { mapState } from "vuex";
 import Stripe from "./Stripe";
+import MercadoPago from "./MercadoPago";
 export default {
+  props: ["mercadopago_key", "mercadopago_currency"], //key desde la configuracion, para ser usando en el component de mercadopago
   data() {
     return {
       mainProps: { width: 95, height: 50 },
@@ -79,10 +83,16 @@ export default {
     };
   },
   components: {
-    Stripe
+    Stripe,
+    MercadoPago
   },
   computed: {
-    ...mapState("payment", ["currencies", "platforms", "stripe_token"])
+    ...mapState("payment", [
+      "currencies",
+      "platforms",
+      "stripe_token",
+      "mercadopago"
+    ])
   },
   created() {
     this.$store.dispatch("payment/getCurrencies");
@@ -90,16 +100,39 @@ export default {
   },
   methods: {
     pagar() {
-      if (this.platform_select.name.toLowerCase() == "stripe") {
-        this.obtenerToken().then(() => {
-          this.StripePay();
-        });
-      } else {
-        this.PaypalPay();
+      switch (this.platform_select.name.toLowerCase()) {
+        case "paypal":
+          this.PaypalPay();
+          break;
+        case "stripe":
+          this.obtenerToken("stripe").then(() => {
+            this.StripePay();
+          });
+          break;
+        case "mercadopago":
+          this.obtenerTarjeta("mercadopago")
+            .then(() => {
+              this.obtenerToken("mercadopago")
+                .then(() => {
+                  this.MercadopagoPay();
+                })
+                .catch(e => {
+                   alert(e); //ejemplo que vieje del reject
+                });
+            })
+            .catch(e => {
+              alert("La tarjeta es inválida");
+            });
+
+          break;
       }
     },
-    async obtenerToken() {
-      const token = await this.$refs.stripe.getToken();
+    async obtenerToken(platform) {
+      await this.$refs[platform].getToken();
+    },
+
+    async obtenerTarjeta(platform) {
+      await this.$refs[platform].getCardNetword();
     },
     PaypalPay() {
       var pay = {
@@ -116,6 +149,17 @@ export default {
         platform: this.platform_select.id,
         value: this.value,
         token: this.stripe_token
+      };
+      this.$store.dispatch("payment/pay", pay);
+    },
+
+    MercadopagoPay() {
+      var pay = {
+        currency: this.currency,
+        platform: this.platform_select.id,
+        value: this.value,
+        token: this.mercadopago.token,
+        card_network: this.mercadopago.card_network
       };
       this.$store.dispatch("payment/pay", pay);
     },

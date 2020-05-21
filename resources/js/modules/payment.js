@@ -3,7 +3,11 @@ export default{
     state: {
         currencies: [],
         platforms: [],
-        stripe_token: null
+        stripe_token: null,
+        mercadopago: {
+            card_network: '',
+            token: '',
+        },
     },
     mutations: {
         SET_CURRENCIES(state, currencies){
@@ -14,6 +18,12 @@ export default{
         },
         STRIPE_TOKEN(state, stripe_token){
             state.stripe_token = stripe_token
+        },
+        MERCADOPAGO_TOKEN(state, mercadopago_token){
+            state.mercadopago.token = mercadopago_token
+        },
+        MERCADOPAGO_CARD(state, card){
+            state.mercadopago.card_network = card
         }
     },
     actions: {
