@@ -55,7 +55,7 @@ class PayU{
             'year' => 'required',
             'card_network' => 'required',
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required'
         ]);
   
         $payment = $this->createPayment($request->value, $request->currency, $request->name, $request->enamil, $request->card, $request->cvc, $request->year, $request->month, $request->card_network);
@@ -121,7 +121,7 @@ class PayU{
                             'street1' => '',
                             'city' => ''
                          ]
-                      ],
+                      ]
                     ],
                    'payer' => [
                       'fullName' => $name,
@@ -134,9 +134,9 @@ class PayU{
                       'name' => "APPROVED"
                    ],
                    'extraParameters' => [
-                      'INSTALLMENTS_NUMBER' => $installments,
-                   ],
-                ],
+                      'INSTALLMENTS_NUMBER' => $installments
+                   ]
+                ]
             ],
             [
                 'Accept' => 'application/json'

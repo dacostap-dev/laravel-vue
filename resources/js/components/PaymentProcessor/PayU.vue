@@ -2,7 +2,7 @@
   <div>
     <label>Card Details:</label>
 
-    <b-form id="mercadopago">
+    <b-form>
       <b-row>
         <b-col cols="12" md="4" sm="8">
           <b-form-group>
