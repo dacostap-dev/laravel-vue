@@ -67,8 +67,6 @@
       </b-form-group>
     </b-form>
     <small class="form-text text-muted" id="card-errors" role="alert">Tu pago será convertido a {{ this.$parent.$parent.mercadopago_currency }}</small>
-
-    <b-button @click="getCardNetword"></b-button>
   </div>
 </template>
 

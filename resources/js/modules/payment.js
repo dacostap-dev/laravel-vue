@@ -8,6 +8,7 @@ export default{
             card_network: '',
             token: '',
         },
+        payu_data: null
     },
     mutations: {
         SET_CURRENCIES(state, currencies){
@@ -24,6 +25,9 @@ export default{
         },
         MERCADOPAGO_CARD(state, card){
             state.mercadopago.card_network = card
+        },
+        PAYU_DATA(state, payu){
+            state.payu_data = payu
         }
     },
     actions: {
