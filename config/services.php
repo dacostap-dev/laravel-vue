@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\PayU;
 use App\Services\PayPal;
 use App\Services\Stripe;
 use App\Services\MercadoPago;
@@ -54,6 +55,16 @@ return [
         'client_id' => env('PAYPAL_CLIENT_ID'),
         'client_secret' => env('PAYPAL_CLIENT_SECRET'),
         'class' => PayPal::class,
+    ],
+
+    'payu' => [
+        'base_uri' => env('PAYU_BASE_URI'),
+        'account_id' => env('PAYU_ACCOUNT_ID'),
+        'merchant_id' => env('PAYU_MERCHANT_ID'),
+        'key' => env('PAYU_KEY'),
+        'secret' => env('PAYU_SECRET'),
+        'base_currency' => 'pen',
+        'class' => PayU::class, 
     ],
 
     'stripe' => [
