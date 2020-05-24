@@ -29,7 +29,7 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-col cols="6">
+            <b-col cols="12">
               <b-form-group
                 label="Eliga un medio de pago: "
                 label-align="left"
@@ -48,12 +48,15 @@
                   </b-button>
                 </b-button-group>
               </b-form-group>
-              <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel"></b-collapse>
-              <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+              <b-collapse class="mb-2" id="accordion-1" accordion="my-accordion" role="tabpanel"></b-collapse>
+              <b-collapse class="mb-2" id="accordion-2" accordion="my-accordion" role="tabpanel">
                 <Stripe ref="stripe" />
               </b-collapse>
-              <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+              <b-collapse class="mb-2" id="accordion-3" accordion="my-accordion" role="tabpanel">
                 <MercadoPago ref="mercadopago" />
+              </b-collapse>
+              <b-collapse class="mb-2" id="accordion-4" accordion="my-accordion" role="tabpanel">
+                <PayU ref="payu" />
               </b-collapse>
             </b-col>
           </b-row>
@@ -71,6 +74,7 @@
 import { mapState } from "vuex";
 import Stripe from "./Stripe";
 import MercadoPago from "./MercadoPago";
+import PayU from "./PayU";
 export default {
   props: ["mercadopago_key", "mercadopago_currency"], //key desde la configuracion, para ser usando en el component de mercadopago
   data() {
@@ -84,14 +88,16 @@ export default {
   },
   components: {
     Stripe,
-    MercadoPago
+    MercadoPago,
+    PayU
   },
   computed: {
     ...mapState("payment", [
       "currencies",
       "platforms",
       "stripe_token",
-      "mercadopago"
+      "mercadopago",
+      "payu_data"
     ])
   },
   created() {
@@ -117,13 +123,19 @@ export default {
                   this.MercadopagoPay();
                 })
                 .catch(e => {
-                   alert(e); //ejemplo que vieje del reject
+                  alert(e); //ejemplo que vieje del reject
                 });
             })
             .catch(e => {
               alert("La tarjeta es inválida");
             });
 
+          break;
+        case "payu":
+          this.getData("payu").then(() => {
+            console.log('datita')
+             this.PayUPay();
+          });
           break;
       }
     },
@@ -134,6 +146,11 @@ export default {
     async obtenerTarjeta(platform) {
       await this.$refs[platform].getCardNetword();
     },
+
+    async getData(platform) {
+      await this.$refs[platform].getData();
+    },
+
     PaypalPay() {
       var pay = {
         currency: this.currency,
@@ -163,6 +180,24 @@ export default {
       };
       this.$store.dispatch("payment/pay", pay);
     },
+
+    PayUPay() {
+      var pay = {
+        currency: this.currency,
+        platform: this.platform_select.id,
+        value: this.value,
+        name: this.payu_data.name,
+        email: this.payu_data.email,
+        card: this.payu_data.card,
+        cvc: this.payu_data.cvc,
+        card_network: this.payu_data.card_network,
+        month: this.payu_data.month,
+        year: this.payu_data.year,
+      };
+
+      this.$store.dispatch("payment/pay", pay);
+    },
+
     select(platform) {
       this.platform_select = platform;
       console.log(platform);
