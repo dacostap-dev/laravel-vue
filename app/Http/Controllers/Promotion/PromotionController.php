@@ -35,7 +35,10 @@ class PromotionController extends ApiController
 
         $this->validate($request, $rules, $messages);
 
-        $promotion = Promotion::create($request->all());
+        $campos = $request->all();
+        $campos['user_id'] = auth()->user()->id;
+        $promotion = Promotion::create($campos);
+        
         return $promotion;
     }
 
