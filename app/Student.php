@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    protected $fillable = ['name', 'email', 'gender' , 'image'];
+    protected $fillable = ['name', 'email', 'gender' , 'image', 'promotion_id'];
 
     protected $appends = [
         'count_moduls',
