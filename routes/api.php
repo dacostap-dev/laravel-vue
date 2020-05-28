@@ -43,3 +43,6 @@ Route::resource('moduls', 'Modul\ModulController')->except(['edit', 'create']);
 
 //Passport
 Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+
+//PDF
+Route::get('pdf', 'PDFGenerator\PDFGeneratorController@generarPDF')->name('pdf');
