@@ -32,6 +32,9 @@
           <b-col cols="6">Lista de módulos</b-col>
           <b-col cols="5">
             <div class="float-right">
+              <b-button v-if="moduls.length >= 1" size="sm" variant="outline-primary" @click="DownloadPDF()">
+                <b-icon icon="file-arrow-down"></b-icon> Descargar PDF
+              </b-button>
               <b-button size="sm" variant="outline-primary" @click="storeModul()">
                 <b-icon icon="plus-circle"></b-icon> Nuevo
               </b-button>
@@ -127,17 +130,26 @@ export default {
   mounted() {
     console.log(this.$route.params.studentId);
     if (this.$route.params.studentId) {
-      this.$store.dispatch("modules/getModulsByStudent", this.$route.params.studentId);
+      this.$store.dispatch(
+        "modules/getModulsByStudent",
+        this.$route.params.studentId
+      );
     }
   },
   destroyed() {
-   this.$store.commit('ModulSelected', null);
+    this.$store.commit("ModulSelected", null);
   },
   computed: {
     ...mapState(["modulSelected"]),
     ...mapState("modules", ["moduls"])
   },
   methods: {
+    DownloadPDF() {
+      this.$store.dispatch("getPdf", {
+        id: this.$route.params.studentId,
+        type: "Student"
+      });
+    },
     updateModul() {
       this.btn = true;
       this.$store

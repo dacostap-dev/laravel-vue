@@ -1,12 +1,29 @@
 <template>
   <div>
-    <b-card header="Lista Alumnos">
+    <NewStudent />
+
+    <b-card header-tag="header">
+      <template v-slot:header>
+        <b-row align-h="around">
+          <b-col cols="6">Lista de Alumnos</b-col>
+          <b-col cols="5">
+            <div class="float-right">
+              <b-button
+                size="sm"
+                variant="outline-primary"
+                @click="$bvModal.show('create-student')"
+              >
+                <b-icon icon="plus-circle"></b-icon>Nuevo
+              </b-button>
+            </div>
+          </b-col>
+        </b-row>
+      </template>
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
+            <SearchComponent module="students" />
 
-            <SearchComponent module="students"/>
-     
             <b-table
               id="students-list"
               show-empty
@@ -56,7 +73,6 @@
             </b-table>
 
             <PaginateComponent modul="students" />
-            
           </b-col>
         </b-row>
       </b-card-body>
@@ -93,6 +109,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import NewStudent from "./Student/NewStudent";
 export default {
   data() {
     return {
@@ -134,12 +151,15 @@ export default {
       emailState: ""
     };
   },
+  components: {
+    NewStudent
+  },
   created() {
     this.getStudents(); //Evalua si viene de una promocion o si son todos
   },
   computed: {
     ...mapState(["modelEdit"]),
-    ...mapState("students", ["students"]),
+    ...mapState("students", ["students"])
   },
   methods: {
     getStudents() {
@@ -226,6 +246,6 @@ export default {
       this.email = "";
       this.emailState = null;
     }
-  },
+  }
 };
 </script>

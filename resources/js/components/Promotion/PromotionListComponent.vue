@@ -1,18 +1,33 @@
 <template>
   <div>
-    <b-card header="Lista de Promociones">
+    <NewPromotion/>
+
+    <b-card header-tag="header">
+      <template v-slot:header>
+        <b-row align-h="around">
+          <b-col cols="6">Lista de Promociones</b-col>
+          <b-col cols="5">
+            <div class="float-right">
+              <b-button size="sm" variant="outline-primary" @click="$bvModal.show('create-promotion')">
+                <b-icon icon="plus-circle"></b-icon>Nuevo
+              </b-button>
+            </div>
+          </b-col>
+        </b-row>
+      </template>
       <b-card-body>
         <b-row class="justify-content-md-center">
           <b-col cols="12">
+            <SearchComponent module="promotions" />
 
-             <SearchComponent module="promotions"/>
-   
             <b-table
               outlined
               responsive
               stacked="md"
               hover
               head-variant="light"
+              show-empty
+              empty-text="No tiene Promociones"
               :items="promotions"
               :fields="cabeceras"
               selectable
@@ -36,10 +51,10 @@
                   :variant="color(row.item.total_alumnos, row.item.alumnos_aprobados)"
                   animated
                 >
-                  <b-progress-bar 
-                  :value="row.item.total_alumnos != 0 ? row.item.alumnos_aprobados * 100 / row.item.total_alumnos : 0"
-                  :label="(row.item.total_alumnos != 0 ? row.item.alumnos_aprobados * 100 / row.item.total_alumnos : 0).toString()+'%'">
-                  </b-progress-bar>
+                  <b-progress-bar
+                    :value="row.item.total_alumnos != 0 ? row.item.alumnos_aprobados * 100 / row.item.total_alumnos : 0"
+                    :label="(row.item.total_alumnos != 0 ? row.item.alumnos_aprobados * 100 / row.item.total_alumnos : 0).toString()+'%'"
+                  ></b-progress-bar>
                 </b-progress>
               </template>
               <template v-slot:cell(edit)="row">
@@ -52,8 +67,7 @@
               </template>
             </b-table>
 
-           <PaginateComponent modul="promotions" />
-
+            <PaginateComponent modul="promotions" />
           </b-col>
         </b-row>
       </b-card-body>
@@ -80,6 +94,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import NewPromotion from "./NewPromotion";
 export default {
   data() {
     return {
@@ -110,16 +125,18 @@ export default {
         }
       ],
       nombre: "",
-      nameState: "",
+      nameState: ""
     };
+  },
+  components: {
+    NewPromotion
   },
   created() {
     this.$store.dispatch("promotions/getPromotions");
   },
   computed: {
     ...mapState(["modelEdit"]),
-    ...mapState("promotions", ["promotions"]),
-
+    ...mapState("promotions", ["promotions"])
   },
   methods: {
     onRowSelected(items) {
@@ -142,7 +159,7 @@ export default {
     color(total, completados) {
       let $color;
       let value = (completados * 100) / total;
-      
+
       $color = "primary";
       return $color;
     },
@@ -180,6 +197,6 @@ export default {
       this.name = "";
       this.nameState = null;
     }
-  },
+  }
 };
 </script>

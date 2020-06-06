@@ -11,6 +11,9 @@ export default {
         StudentsList(state, students) {
             state.students = students
         },
+        STUDENT_STORE(state, student) {
+            state.students.push(student);
+        },
         StudentUpdate(state, student) {
             const index = state.students.findIndex(n => n.id == student.id);
             state.students[index].name = student.name;
@@ -55,6 +58,15 @@ export default {
               console.log(e.response)
             }
           },
+          async storeStudent(context, params) {
+            try {
+                const res = await axios.post('/students', params)
+                context.commit('STUDENT_STORE', res.data)
+            }
+            catch (e) {
+                console.log(e.response)
+            }
+        },
         async updateStudent(context, params) {
             console.log(params)
             try {

@@ -22,19 +22,25 @@ class StudentController extends ApiController
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:students',
             'gender' => 'required',
         ];
 
         $message = [
             'name.required' => 'El nombre es obligatorio',
-            'email.required' => 'La descripcion es obligatoria',
+            'email.required' => 'El email es obligatorio',
+            'email.unique' => 'El email debe ser único',
             'gender.required' => 'El genero es obligatorio',
         ];
 
         $this->validate($request, $rules, $message);
         $data = $request->all();
-        $data['image']  = $request->image->store('');
+
+        if($request->has('image')){
+            $data['image']  = $request->image->store('');
+        }else{
+            $data['image'] = "6.jpg";
+        }
         
         $student = Student::create($data);
         return $student;

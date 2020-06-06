@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Promotion extends Model
 {
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'user_id'];
     
     protected $appends = [
         'total_alumnos',
