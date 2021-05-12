@@ -38,7 +38,7 @@
         "@coreui/utils": "^1.2.4",
         "@coreui/vue": "^3.0.5",
         "bootstrap-vue": "^2.9.0",
-        "chart.js": "^2.9.3",
+        "chart.js": "^2.9.4",
         "hchs-vue-charts": "^1.2.8",
         "vee-validate": "<3.0.0",
         "vue-router": "^3.1.6",
